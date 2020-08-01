@@ -60,6 +60,7 @@ tiles_scene = NodePath("../Tiles")
 [node name="Allies" type="Node2D" parent="."]
 
 [node name="Player" parent="Allies" instance=ExtResource( 4 )]
+position = Vector2( 540.588, 546.26 )
 
 [node name="Player2" parent="Allies" instance=ExtResource( 4 )]
 position = Vector2( 415.624, 162.754 )
@@ -73,9 +74,6 @@ position = Vector2( 415.624, 162.754 )
 [node name="Baddy2" type="Node2D" parent="Baddies"]
 position = Vector2( 671.137, 545.436 )
 script = ExtResource( 5 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Sprite" type="Sprite" parent="Baddies/Baddy2"]
 modulate = Color( 1, 0, 0, 1 )
@@ -84,9 +82,6 @@ texture = ExtResource( 6 )
 [node name="Baddy3" type="Node2D" parent="Baddies"]
 position = Vector2( 797.572, 161.72 )
 script = ExtResource( 5 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Sprite" type="Sprite" parent="Baddies/Baddy3"]
 modulate = Color( 1, 0, 0, 1 )
