@@ -21,7 +21,7 @@ func set_current_tile(new_tile):
 	if (current_tile):
 		current_tile.set_state(_tile_script.State.OPEN)
 	current_tile = new_tile
-	current_tile.set_state(_tile_script.State.UNIT_ALLY)
+	current_tile.set_state(_tile_script.State.UNIT_ENEMY)
 
 func _run_next_tile():
 	if path.size() > 0:

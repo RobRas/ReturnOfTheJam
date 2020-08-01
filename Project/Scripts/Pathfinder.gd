@@ -1,14 +1,15 @@
 extends Node2D
 
+var _indicator_script = preload("res://Scripts/Indicator.gd")
+var _tile_script = preload("res://Scripts/Tile.gd")
+
 export(NodePath) var player_node
 var player
 
-var _indicator_scene = preload("res://Scenes/PathfindingIdicator.tscn")
-var _indicator_pool = []
-var _active_indicators = {}
-
 export(NodePath) var tiles_scene
 var _tiles
+
+var movement_range = 4
 
 var _starting_tile
 var _current_tiles = []
@@ -46,10 +47,7 @@ const _DIRECTION_WEIGHTS = {
 
 func _ready():
 	player = get_node(player_node)
-	for _i in range(30):
-		_indicator_pool.push_back(_indicator_scene.instance())
 	_tiles = get_node(tiles_scene)
-	clear_search()
 
 func init():
 	set_starting_tile(player.global_position)
@@ -60,48 +58,39 @@ func _input(event):
 			return
 			
 		var tile = _map.get_tile_from_world(event.position)
-		if not _active_indicators.has(tile):
-			return
 		
 		var path = get_path_from_tile(tile)
 		if path.size() > 0:
 			player.move_along_path(path)
 			clear_search()
+			for tile in _tiles.get_children():
+				tile.set_indicator_state(_indicator_script.State.DISABLED)
 		
 	if event is InputEventMouseMotion:
 		if _map.is_valid_world_position(event.position):
-			for indicator in _active_indicators.values():
-				indicator.modulate = Color.blue
-				
-			var current_tile = _map.get_tile_from_world(event.position)
-			var current_tile_path_data = current_tile.find_node("PathData")
-			
 			if _current_tiles.size() > 0:
-				if _active_indicators.has(current_tile):
-					if current_tile_path_data.previous_tile:
-						_active_indicators[current_tile].modulate = Color.yellow
-						while current_tile_path_data.previous_tile:
-							_active_indicators[current_tile].modulate = Color.yellow
-							current_tile = current_tile_path_data.previous_tile
-							current_tile_path_data = current_tile.find_node("PathData")
-					_active_indicators[current_tile].modulate = Color.yellow
+				for tile in _current_tiles:
+					if tile.current_state != _tile_script.State.OPEN:
+						continue
+					tile.set_indicator_state(_indicator_script.State.REACHABLE)
+				var current_tile = _map.get_tile_from_world(event.position)
+				var current_tile_path_data = current_tile.find_node("PathData")
+				while current_tile_path_data.previous_tile:
+					current_tile.set_indicator_state(_indicator_script.State.PATH)
+					current_tile = current_tile_path_data.previous_tile
+					current_tile_path_data = current_tile.find_node("PathData")
 			
 
 func set_starting_tile(world_position):
 	if _map.is_valid_world_position(world_position):
 		_starting_tile = _map.get_tile_from_world(world_position)
 		var clicked_tile_position = _starting_tile.map_position
-		_current_tiles = get_moveable_tiles_in_range(clicked_tile_position, 3)
-		if _indicator_pool.size() < _current_tiles.size():
-			for _i in range(_current_tiles.size() - _indicator_pool.size()):
-				_indicator_pool.push_back(_indicator_scene.instance())
-		for i in range(_current_tiles.size()):
-			var tile = _current_tiles[i]
-			var indicator = _indicator_pool[i]
-			add_child(indicator)
-			_active_indicators[tile] = indicator
-			indicator.global_position = tile.global_position
-			indicator.modulate = Color.blue
+		_current_tiles = get_moveable_tiles_in_range(clicked_tile_position, movement_range)
+		for tile in _current_tiles:
+			if tile.current_state != _tile_script.State.OPEN:
+						continue
+			tile.set_indicator_state(_indicator_script.State.REACHABLE)
+			
 
 func get_path_from_tile(tile):
 	var path = []
@@ -121,7 +110,6 @@ func get_moveable_tiles_in_range(starting_map_position, max_distance):
 		return returned_tiles
 	
 	_starting_tile = _map.get_tile_from_map(starting_map_position)
-	returned_tiles.push_back(_starting_tile)
 	
 	clear_search()
 	var check_now = []
@@ -132,6 +120,7 @@ func get_moveable_tiles_in_range(starting_map_position, max_distance):
 	
 	while (check_now.size() > 0):
 		var current_tile = check_now.pop_front()
+		
 		var current_tile_path_data = current_tile.find_node("PathData")
 		for direction in _DIRECTIONS_TO_CHECK:
 			var check_direction = current_tile.map_position + direction
@@ -143,7 +132,7 @@ func get_moveable_tiles_in_range(starting_map_position, max_distance):
 			if next_tile_path_data.distance <= current_tile_path_data.distance + _DIRECTION_WEIGHTS[direction]:
 				continue
 			
-			if not next_tile.current_state == next_tile.State.OPEN:
+			if not next_tile.current_state == _tile_script.State.OPEN:
 				continue
 			
 			next_tile_path_data.distance = current_tile_path_data.distance + _DIRECTION_WEIGHTS[direction];
@@ -163,13 +152,14 @@ func get_moveable_tiles_in_range(starting_map_position, max_distance):
 	return returned_tiles
 
 func clear_search():
-	_current_tiles.clear()
-	_active_indicators.clear()
-	for child_tiles in get_children():
-		remove_child(child_tiles)
-	for tile in _tiles.get_children():
+	for tile in _current_tiles:
 		tile.find_node("PathData").clear()
+		tile.set_indicator_to_default()
+	_current_tiles.clear()
 
 
 func _on_Player_destination_reached(tile):
+	for tile in _tiles.get_children():
+		tile.find_node("PathData").clear()
+		tile.set_indicator_to_default()
 	set_starting_tile(tile.global_position)

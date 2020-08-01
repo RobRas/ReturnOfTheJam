@@ -3,11 +3,11 @@
 [ext_resource path="res://Art/Walls.png" type="Texture" id=1]
 [ext_resource path="res://Art/Ground.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Terrain.gd" type="Script" id=3]
-[ext_resource path="res://Art/Player.png" type="Texture" id=4]
-[ext_resource path="res://Scripts/Selection.gd" type="Script" id=5]
-[ext_resource path="res://Art/SelectionIcon.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/Ally.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/Baddy.gd" type="Script" id=5]
+[ext_resource path="res://Art/Player.png" type="Texture" id=6]
 [ext_resource path="res://Scripts/Pathfinder.gd" type="Script" id=7]
-[ext_resource path="res://Scripts/Player.gd" type="Script" id=8]
+[ext_resource path="res://Scenes/Baddy.tscn" type="PackedScene" id=8]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Walls.png 1"
@@ -50,31 +50,46 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 
 [node name="Tiles" type="Node2D" parent="."]
 
-[node name="Player" type="Node2D" parent="."]
-position = Vector2( 545, 545 )
-script = ExtResource( 8 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="Indicators" type="Node2D" parent="."]
 
-[node name="Sprite" type="Sprite" parent="Player"]
-texture = ExtResource( 4 )
+[node name="Pathfinder" type="Node2D" parent="."]
+script = ExtResource( 7 )
+player_node = NodePath("../Allies/Player")
+tiles_scene = NodePath("../Tiles")
 
-[node name="Tween" type="Tween" parent="Player"]
+[node name="Allies" type="Node2D" parent="."]
 
-[node name="Selection" type="Node2D" parent="."]
-position = Vector2( 416.721, 286.795 )
+[node name="Player" parent="Allies" instance=ExtResource( 4 )]
+
+[node name="Player2" parent="Allies" instance=ExtResource( 4 )]
+position = Vector2( 415.624, 162.754 )
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Baddies" type="Node2D" parent="."]
+
+[node name="Baddy" parent="Baddies" instance=ExtResource( 8 )]
+
+[node name="Baddy2" type="Node2D" parent="Baddies"]
+position = Vector2( 671.137, 545.436 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Selection"]
+[node name="Sprite" type="Sprite" parent="Baddies/Baddy2"]
+modulate = Color( 1, 0, 0, 1 )
 texture = ExtResource( 6 )
 
-[node name="Pathfinder" type="Node2D" parent="."]
-script = ExtResource( 7 )
-player_node = NodePath("../Player")
-tiles_scene = NodePath("../Tiles")
-[connection signal="destination_reached" from="Player" to="Pathfinder" method="_on_Player_destination_reached"]
-[connection signal="tween_all_completed" from="Player/Tween" to="Player" method="_on_Tween_tween_all_completed"]
+[node name="Baddy3" type="Node2D" parent="Baddies"]
+position = Vector2( 797.572, 161.72 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Baddies/Baddy3"]
+modulate = Color( 1, 0, 0, 1 )
+texture = ExtResource( 6 )
+[connection signal="destination_reached" from="Allies/Player" to="Pathfinder" method="_on_Player_destination_reached"]
+[connection signal="destination_reached" from="Allies/Player2" to="Pathfinder" method="_on_Player_destination_reached"]
