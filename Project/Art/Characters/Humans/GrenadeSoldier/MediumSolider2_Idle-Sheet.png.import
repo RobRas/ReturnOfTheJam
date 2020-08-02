@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Grass2.png-299bcaca7d390d064b2686094488d3e3.stex"
+path="res://.import/MediumSolider2_Idle-Sheet.png-884c8f2c474feb16592d5587c3b102ab.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Tilemap/Grass/Grass2.png"
-dest_files=[ "res://.import/Grass2.png-299bcaca7d390d064b2686094488d3e3.stex" ]
+source_file="res://Art/Characters/Humans/GrenadeSoldier/MediumSolider2_Idle-Sheet.png"
+dest_files=[ "res://.import/MediumSolider2_Idle-Sheet.png-884c8f2c474feb16592d5587c3b102ab.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

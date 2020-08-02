@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Grass2.png-299bcaca7d390d064b2686094488d3e3.stex"
+path="res://.import/InsideWalls.png-a1089d2a1643cadefbc1dddbcdd42dc1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Tilemap/Grass/Grass2.png"
-dest_files=[ "res://.import/Grass2.png-299bcaca7d390d064b2686094488d3e3.stex" ]
+source_file="res://Art/Tilemap/Walls/InsideWalls.png"
+dest_files=[ "res://.import/InsideWalls.png-a1089d2a1643cadefbc1dddbcdd42dc1.stex" ]
 
 [params]
 

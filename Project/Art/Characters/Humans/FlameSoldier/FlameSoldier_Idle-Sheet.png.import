@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Grass2.png-299bcaca7d390d064b2686094488d3e3.stex"
+path="res://.import/FlameSoldier_Idle-Sheet.png-7b8634f5087fc6e2e79a9f07c19e9d96.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Tilemap/Grass/Grass2.png"
-dest_files=[ "res://.import/Grass2.png-299bcaca7d390d064b2686094488d3e3.stex" ]
+source_file="res://Art/Characters/Humans/FlameSoldier/FlameSoldier_Idle-Sheet.png"
+dest_files=[ "res://.import/FlameSoldier_Idle-Sheet.png-7b8634f5087fc6e2e79a9f07c19e9d96.stex" ]
 
 [params]
 
