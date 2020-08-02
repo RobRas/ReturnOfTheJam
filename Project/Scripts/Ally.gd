@@ -4,27 +4,30 @@ signal movement_began(path)
 signal tile_reached(tile)
 signal destination_reached(tile)
 
-export(float) var tiles_per_second = 0.2
 var current_tile
-
-export(bool) var enabled = false
+var enabled = false
 
 const _tile_script = preload("res://Scripts/Tile.gd")
 
 
+func _ready():
+	$Movement.connect("movement_began", self, "_on_Movement_movement_began")
+	$Movement.connect("tile_reached", self, "_on_Movement_tile_reached")
+	$Movement.connect("destination_reached", self, "_on_Movement_destination_reached")
+
 func init(tile):
 	set_current_tile(tile)
 	global_position = tile.global_position
-	$Movement.init(tiles_per_second, enabled)
+	$Movement.init($History)
 
-func _process(delta):
-	if Input.is_action_just_pressed("reverse"):
-		reverse()
-
-func reverse():
-	$Movement.reverse()
+func _process(_delta):
+	if enabled and Input.is_action_just_pressed("reverse"):
+		if $History.can_reverse():
+			$History.reverse()
 
 func move_along_path(path):
+	if not enabled:
+		return
 	$Movement.move_along_path(path)
 
 func set_current_tile(new_tile):

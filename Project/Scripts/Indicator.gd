@@ -3,7 +3,7 @@ extends Node2D
 const _PASSIVE_ALPHA = 0.3
 const _ACTIVE_ALPHA = 1.0
 
-enum State { DISABLED, OPEN, ALLY, ENEMY, REACHABLE, PATH }
+enum State { DISABLED, OPEN, ALLY, BADDY, REACHABLE, PATH }
 var state
 
 func set_state(new_state):
@@ -22,7 +22,7 @@ func set_state(new_state):
 			var color = Color.green
 			color.a = _ACTIVE_ALPHA
 			$Sprite.modulate = color
-		State.ENEMY:
+		State.BADDY:
 			var color = Color.red
 			color.a = _ACTIVE_ALPHA
 			$Sprite.modulate = color

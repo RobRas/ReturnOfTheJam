@@ -7,18 +7,17 @@ var _indicator_script = preload("res://Scripts/Indicator.gd")
 
 var map_position = Vector2()
 
-enum State { OPEN, BLOCKED, UNIT_ALLY, UNIT_ENEMY }
+enum State { OPEN, BLOCKED, UNIT_ALLY, UNIT_BADDY }
 var current_state = State.OPEN
 
-func init(cell_position, world_position, tile_index):
+func init(cell_position, world_position, block):
 	map_position = cell_position
 	position = world_position
 	
-	match(tile_index): # MAKE 0 OPEN!!
-		1:
-			current_state = State.OPEN
-		0:
-			current_state = State.BLOCKED
+	if block:
+		current_state = State.BLOCKED
+	else:
+		current_state = State.OPEN
 	
 	_indicator = indicator_scene.instance()
 	add_child(_indicator)
@@ -41,5 +40,5 @@ func set_indicator_to_default():
 			_indicator.set_state(_indicator_script.State.DISABLED)
 		State.UNIT_ALLY:
 			_indicator.set_state(_indicator_script.State.ALLY)
-		State.UNIT_ENEMY:
-			_indicator.set_state(_indicator_script.State.ENEMY)
+		State.UNIT_BADDY:
+			_indicator.set_state(_indicator_script.State.BADDY)

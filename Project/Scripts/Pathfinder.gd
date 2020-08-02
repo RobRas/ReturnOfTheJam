@@ -3,18 +3,15 @@ extends Node2D
 var _indicator_script = preload("res://Scripts/Indicator.gd")
 var _tile_script = preload("res://Scripts/Tile.gd")
 
-export(NodePath) var players_node
-var players
+export(NodePath) var players_node_path
+var _players_node
 
-export(NodePath) var tiles_scene
-var _tiles
+var _map
 
 var movement_range = 4
 
 var _starting_tile
 var _current_tiles = []
-
-onready var _map = get_parent()
 
 enum DirectionType { STRAIGHT, DIAGONAL }
 
@@ -46,13 +43,13 @@ const _DIRECTION_WEIGHTS = {
 }
 
 func _ready():
-	players = get_node(players_node).get_children()
-	_tiles = get_node(tiles_scene)
+	_players_node = get_node(players_node_path)
 
-func init():
-	for player in players:
+func init(map):
+	_map = map
+	for player in _players_node.get_children():
 		player.connect("destination_reached", self, "_on_Ally_destination_reached")
-	set_starting_tile(players[0].global_position)
+	set_starting_tile(_players_node.get_children()[0].global_position)
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
@@ -62,10 +59,10 @@ func _input(event):
 		var tile = _map.get_tile_from_world(event.position)
 		
 		var path = get_path_from_tile(tile)
-		if path.size() > 0:
-			players[0].move_along_path(path)
+		if path.size() > 1:
+			_players_node.get_children()[0].move_along_path(path)
 			clear_search()
-			for tile in _tiles.get_children():
+			for tile in _map.get_tiles():
 				tile.set_indicator_state(_indicator_script.State.DISABLED)
 		
 	if event is InputEventMouseMotion:
@@ -102,6 +99,7 @@ func get_path_from_tile(tile):
 		tile = path_data.previous_tile
 		path_data = tile.find_node("PathData")
 	
+	path.push_front(tile)
 	return path
 	
 
@@ -161,7 +159,8 @@ func clear_search():
 
 
 func _on_Ally_destination_reached(tile):
-	for tile in _tiles.get_children():
+	print("Reached")
+	for tile in _map.get_tiles():
 		tile.find_node("PathData").clear()
 		tile.set_indicator_to_default()
 	set_starting_tile(tile.global_position)

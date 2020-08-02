@@ -6,59 +6,65 @@ signal destination_reached(tile)
 
 const _TILE_SIZE = 16
 
-var _tiles_per_second
+export(float) var tiles_per_second = 0.2
 
 var _tile_script = preload("res://Scripts/Tile.gd")
 var _movement_action = preload("res://Scenes/MovementAction.tscn")
 
-var path
-var next_tile
+var _path
+var _current_tile
+var _next_tile
 
-var current_tile
-
-var _enabled = false
 var _moving = false
+var _record = true
 
-func init(tiles_per_second, enabled):
-	_tiles_per_second = tiles_per_second
-	_enabled = enabled
+var _history
 
-func move_along_path(path_to_follow, record = true):
+func init(history):
+	_history = history
+
+func move_along_path(path, record = true):
 	if _moving:
 		return
 	
-	path = path_to_follow
-	if record:
-		var movement_action = _movement_action.instance()
-		movement_action.path = path.duplicate()
-		$History.push_action(movement_action)
-	
-	if path.size() > 0:
-		_moving = true
-		emit_signal("movement_began", path)
-	_run_next_tile()
-
-func reverse():
-	if not _enabled or _moving:
-		return
-
-	if not $History.can_pop():
+	if path.size() <= 1:
 		return
 	
-	var action = $History.pop_action()
-	action.path.invert()
-	move_along_path(action.path, false)
+	_path = path
+	_moving = true
+	_record = record
+	
+	emit_signal("movement_began", _path)
+	
+	_current_tile = _path.pop_front()
+	_next_tile = _path.pop_front()
+	_add_record([_current_tile, _next_tile])
+	_start_movement_tween()
+
+func is_moving():
+	return _moving
 
 func _run_next_tile():
-	if path.size() > 0:
-		next_tile = path.pop_front()
-		var distance = global_position.distance_to(next_tile.global_position)
-		$Tween.interpolate_property(get_parent(), "global_position", global_position, next_tile.global_position, distance / _TILE_SIZE * _tiles_per_second, Tween.TRANS_LINEAR)
-		$Tween.start()
+	_add_record([_current_tile, _next_tile])
+	if _path.size() > 0:
+		_current_tile = _next_tile
+		_next_tile = _path.pop_front()
+		_start_movement_tween()
 	else:
 		_moving = false
-		emit_signal("destination_reached", next_tile)
+		emit_signal("destination_reached", _next_tile)
+
+func _start_movement_tween():
+	var distance = global_position.distance_to(_next_tile.global_position)
+	$Tween.interpolate_property(get_parent(), "global_position", global_position, _next_tile.global_position, distance / _TILE_SIZE * tiles_per_second, Tween.TRANS_LINEAR)
+	$Tween.start()
+	
+func _add_record(path):
+	if _record:
+		var movement_action = _movement_action.instance()
+		movement_action.init(path, self)
+		_history.add_action(movement_action)
 
 func _on_Tween_tween_all_completed():
-	emit_signal("tile_reached", next_tile)
+	emit_signal("tile_reached", _next_tile)
 	_run_next_tile()
