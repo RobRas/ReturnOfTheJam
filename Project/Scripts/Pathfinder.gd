@@ -3,8 +3,8 @@ extends Node2D
 var _indicator_script = preload("res://Scripts/Indicator.gd")
 var _tile_script = preload("res://Scripts/Tile.gd")
 
-export(NodePath) var player_node
-var player
+export(NodePath) var players_node
+var players
 
 export(NodePath) var tiles_scene
 var _tiles
@@ -46,11 +46,13 @@ const _DIRECTION_WEIGHTS = {
 }
 
 func _ready():
-	player = get_node(player_node)
+	players = get_node(players_node).get_children()
 	_tiles = get_node(tiles_scene)
 
 func init():
-	set_starting_tile(player.global_position)
+	for player in players:
+		player.connect("destination_reached", self, "_on_Ally_destination_reached")
+	set_starting_tile(players[0].global_position)
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
@@ -61,7 +63,7 @@ func _input(event):
 		
 		var path = get_path_from_tile(tile)
 		if path.size() > 0:
-			player.move_along_path(path)
+			players[0].move_along_path(path)
 			clear_search()
 			for tile in _tiles.get_children():
 				tile.set_indicator_state(_indicator_script.State.DISABLED)
@@ -88,7 +90,7 @@ func set_starting_tile(world_position):
 		_current_tiles = get_moveable_tiles_in_range(clicked_tile_position, movement_range)
 		for tile in _current_tiles:
 			if tile.current_state != _tile_script.State.OPEN:
-						continue
+				continue
 			tile.set_indicator_state(_indicator_script.State.REACHABLE)
 			
 
@@ -158,7 +160,7 @@ func clear_search():
 	_current_tiles.clear()
 
 
-func _on_Player_destination_reached(tile):
+func _on_Ally_destination_reached(tile):
 	for tile in _tiles.get_children():
 		tile.find_node("PathData").clear()
 		tile.set_indicator_to_default()

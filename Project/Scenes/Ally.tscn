@@ -1,17 +1,24 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://Art/Player.png" type="Texture" id=2]
+[ext_resource path="res://Art/Characters/Humans/SmallSoldier/SmallSoldier.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Movement.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/History.gd" type="Script" id=4]
 
 [node name="Ally" type="Node2D"]
-position = Vector2( 545, 545 )
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
-[node name="Tween" type="Tween" parent="."]
-[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[node name="Movement" type="Node2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="Tween" type="Tween" parent="Movement"]
+
+[node name="History" type="Node2D" parent="Movement"]
+script = ExtResource( 4 )
+[connection signal="destination_reached" from="Movement" to="." method="_on_Movement_destination_reached"]
+[connection signal="movement_began" from="Movement" to="." method="_on_Movement_movement_began"]
+[connection signal="tile_reached" from="Movement" to="." method="_on_Movement_tile_reached"]
+[connection signal="tween_all_completed" from="Movement/Tween" to="Movement" method="_on_Tween_tween_all_completed"]
