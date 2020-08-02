@@ -1,6 +1,6 @@
 extends Node2D
 
-const _PASSIVE_ALPHA = 0.7
+const _PASSIVE_ALPHA = 0.3
 const _ACTIVE_ALPHA = 1.0
 
 enum State { DISABLED, OPEN, ALLY, ENEMY, REACHABLE, PATH }
