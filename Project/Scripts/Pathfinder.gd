@@ -47,52 +47,22 @@ func _ready():
 
 func init(map):
 	_map = map
-	for player in _players_node.get_children():
-		player.connect("destination_reached", self, "_on_Ally_destination_reached")
-	set_starting_tile(_players_node.get_children()[0].global_position)
 
-func _input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
-		if not _map.is_valid_world_position(event.position):
-			return
-			
-		var tile = _map.get_tile_from_world(event.position)
-		
-		var path = get_path_from_tile(tile)
-		if path.size() > 1:
-			_players_node.get_children()[0].move_along_path(path)
-			clear_search()
-			for tile in _map.get_tiles():
-				tile.set_indicator_state(_indicator_script.State.DISABLED)
-		
-	if event is InputEventMouseMotion:
-		if _map.is_valid_world_position(event.position):
-			if _current_tiles.size() > 0:
-				for tile in _current_tiles:
-					if tile.current_state != _tile_script.State.OPEN:
-						continue
-					tile.set_indicator_state(_indicator_script.State.REACHABLE)
-				var current_tile = _map.get_tile_from_world(event.position)
-				var current_tile_path_data = current_tile.find_node("PathData")
-				while current_tile_path_data.previous_tile:
-					current_tile.set_indicator_state(_indicator_script.State.PATH)
-					current_tile = current_tile_path_data.previous_tile
-					current_tile_path_data = current_tile.find_node("PathData")
-			
+func set_starting_tile(starting_tile):
+	_starting_tile = starting_tile
+	var clicked_tile_position = _starting_tile.map_position
+	_current_tiles = get_moveable_tiles_in_range(clicked_tile_position, movement_range)
+	for tile in _current_tiles:
+		if tile.current_state != _tile_script.State.OPEN:
+			continue
+		tile.set_indicator_state(_indicator_script.State.REACHABLE)
 
-func set_starting_tile(world_position):
-	if _map.is_valid_world_position(world_position):
-		_starting_tile = _map.get_tile_from_world(world_position)
-		var clicked_tile_position = _starting_tile.map_position
-		_current_tiles = get_moveable_tiles_in_range(clicked_tile_position, movement_range)
-		for tile in _current_tiles:
-			if tile.current_state != _tile_script.State.OPEN:
-				continue
-			tile.set_indicator_state(_indicator_script.State.REACHABLE)
-			
+
 
 func get_path_from_tile(tile):
 	var path = []
+	if not tile in _current_tiles:
+		return path
 	var path_data = tile.find_node("PathData")
 	while path_data.previous_tile:
 		path.push_front(tile)
@@ -104,6 +74,7 @@ func get_path_from_tile(tile):
 	
 
 func get_moveable_tiles_in_range(starting_map_position, max_distance):
+	clear_search()
 	var returned_tiles = []
 	
 	if not _map.is_valid_map_position(starting_map_position):
@@ -151,16 +122,17 @@ func get_moveable_tiles_in_range(starting_map_position, max_distance):
 	
 	return returned_tiles
 
+func display_path(path):
+	if _current_tiles.size() > 0:
+		for tile in _current_tiles:
+			if tile.current_state != _tile_script.State.OPEN:
+				continue
+			tile.set_indicator_state(_indicator_script.State.REACHABLE)
+		for tile in path:
+			tile.set_indicator_state(_indicator_script.State.PATH)
+
 func clear_search():
 	for tile in _current_tiles:
 		tile.find_node("PathData").clear()
 		tile.set_indicator_to_default()
 	_current_tiles.clear()
-
-
-func _on_Ally_destination_reached(tile):
-	print("Reached")
-	for tile in _map.get_tiles():
-		tile.find_node("PathData").clear()
-		tile.set_indicator_to_default()
-	set_starting_tile(tile.global_position)

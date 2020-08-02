@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scenes/Baddy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Ally.tscn" type="PackedScene" id=2]
@@ -17,6 +17,10 @@
 [ext_resource path="res://Scripts/Map.gd" type="Script" id=15]
 [ext_resource path="res://Scripts/Baddies.gd" type="Script" id=16]
 [ext_resource path="res://Scripts/Allies.gd" type="Script" id=17]
+[ext_resource path="res://Scripts/PlayerSelectState.gd" type="Script" id=18]
+[ext_resource path="res://Scripts/GameState.gd" type="Script" id=19]
+[ext_resource path="res://Scripts/AllySelectedState.gd" type="Script" id=20]
+[ext_resource path="res://Scripts/AllyMovingState.gd" type="Script" id=21]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Walls.png 1"
@@ -216,6 +220,27 @@ position = Vector2( 420.542, 149.617 )
 [node name="Baddy3" parent="Map/Baddies" instance=ExtResource( 1 )]
 position = Vector2( 465.187, 100.222 )
 
-[node name="Pathfinder" type="Node2D" parent="."]
+[node name="Pathfinder" type="Node2D" parent="Map"]
 script = ExtResource( 13 )
-players_node_path = NodePath("../Map/Allies")
+players_node_path = NodePath("../Allies")
+
+[node name="GameState" type="Node2D" parent="."]
+script = ExtResource( 19 )
+
+[node name="PlayerSelectState" type="Node2D" parent="GameState"]
+script = ExtResource( 18 )
+map_node_path = NodePath("../../Map")
+ally_selected_state_path = NodePath("../AllySelectedState")
+
+[node name="AllySelectedState" type="Node2D" parent="GameState"]
+script = ExtResource( 20 )
+map_node_path = NodePath("../../Map")
+pathfinder_node_path = NodePath("../../Map/Pathfinder")
+ally_moving_state_path = NodePath("../AllyMovingState")
+
+[node name="AllyMovingState" type="Node2D" parent="GameState"]
+script = ExtResource( 21 )
+player_selected_state_path = NodePath("../PlayerSelectState")
+pathfinder_path = NodePath("../../Map/Pathfinder")
+
+[node name="AllyAbilityState" type="Node2D" parent="GameState"]

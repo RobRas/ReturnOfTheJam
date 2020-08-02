@@ -9,6 +9,7 @@ var map_position = Vector2()
 
 enum State { OPEN, BLOCKED, UNIT_ALLY, UNIT_BADDY }
 var current_state = State.OPEN
+var unit = null
 
 func init(cell_position, world_position, block):
 	map_position = cell_position

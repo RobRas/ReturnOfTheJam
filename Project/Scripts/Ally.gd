@@ -5,7 +5,7 @@ signal tile_reached(tile)
 signal destination_reached(tile)
 
 var current_tile
-var enabled = false
+var selectable = true
 
 const _tile_script = preload("res://Scripts/Tile.gd")
 
@@ -21,20 +21,23 @@ func init(tile):
 	$Movement.init($History)
 
 func _process(_delta):
+	"""
 	if enabled and Input.is_action_just_pressed("reverse"):
 		if $History.can_reverse():
 			$History.reverse()
+	"""
+	pass
 
 func move_along_path(path):
-	if not enabled:
-		return
 	$Movement.move_along_path(path)
 
 func set_current_tile(new_tile):
 	if (current_tile):
 		current_tile.set_state(_tile_script.State.OPEN)
+		current_tile.unit = null
 	current_tile = new_tile
 	current_tile.set_state(_tile_script.State.UNIT_ALLY)
+	current_tile.unit = self
 
 
 func _on_Movement_destination_reached(tile):
