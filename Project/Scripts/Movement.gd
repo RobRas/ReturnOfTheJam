@@ -1,6 +1,7 @@
 extends Node2D
 
-signal movement_began(path)
+signal movement_began
+signal position_reached
 signal tile_reached(tile)
 signal destination_reached(tile)
 
@@ -8,63 +9,59 @@ const _TILE_SIZE = 16
 
 export(float) var tiles_per_second = 0.2
 
-var _tile_script = preload("res://Scripts/Tile.gd")
-var _movement_action = preload("res://Scenes/MovementAction.tscn")
+var _movement_command = preload("res://Scenes/MovementCommand.tscn")
 
-var _path
-var _current_tile
-var _next_tile
+var _path = []
 
 var _moving = false
-var _record = true
+var _move_to_tile
 
 var _history
 
 func init(history):
 	_history = history
 
-func move_along_path(path, record = true):
-	if _moving:
+func can_move():
+	return not _moving
+
+func move_along_path(path):
+	_path = path.duplicate()
+	if _path.size() == 0: # Outside movement range
 		return
-	
-	if path.size() <= 1:
+
+	if _path.size() == 1: # Same tile as unit
+		emit_signal("movement_began")
+		emit_signal("position_reached", _path[0])
+		emit_signal("tile_reached", _path[0])
+		emit_signal("destination_reached", _path[0])
 		return
-	
-	_path = path
+
+	_execute_next_path_tile()
+
+func _execute_next_path_tile():
+	var command = _movement_command.instance()
+	command.init(self, _path.pop_front(), _path[0])
+	_history.execute_command(command)
+
+func move_to_tile(command, tile):
+	command.connect("execution_completed", self, "_on_command_execution_completed")
+	emit_signal("movement_began")
+	_move_to_tile = tile
 	_moving = true
-	_record = record
-	
-	emit_signal("movement_began", _path)
-	
-	_current_tile = _path.pop_front()
-	_next_tile = _path.pop_front()
-	_add_record([_current_tile, _next_tile])
-	_start_movement_tween()
-
-func is_moving():
-	return _moving
-
-func _run_next_tile():
-	_add_record([_current_tile, _next_tile])
-	if _path.size() > 0:
-		_current_tile = _next_tile
-		_next_tile = _path.pop_front()
-		_start_movement_tween()
-	else:
-		_moving = false
-		emit_signal("destination_reached", _next_tile)
-
-func _start_movement_tween():
-	var distance = global_position.distance_to(_next_tile.global_position)
-	$Tween.interpolate_property(get_parent(), "global_position", global_position, _next_tile.global_position, distance / _TILE_SIZE * tiles_per_second, Tween.TRANS_LINEAR)
+	var distance = global_position.distance_to(tile.global_position)
+	$Tween.interpolate_property(get_parent(), "global_position", global_position, tile.global_position, distance / _TILE_SIZE * tiles_per_second, Tween.TRANS_LINEAR)
 	$Tween.start()
-	
-func _add_record(path):
-	if _record:
-		var movement_action = _movement_action.instance()
-		movement_action.init(path, self)
-		_history.add_action(movement_action)
 
 func _on_Tween_tween_all_completed():
-	emit_signal("tile_reached", _next_tile)
-	_run_next_tile()
+	emit_signal("position_reached")
+
+
+func _on_command_execution_completed(command):
+	command.disconnect("execution_completed", self, "_on_command_execution_completed")
+	_moving = false
+	emit_signal("tile_reached", _move_to_tile)
+	if _path.size() > 1:
+		_execute_next_path_tile()
+	else:
+		_path.clear()
+		emit_signal("destination_reached", _move_to_tile)

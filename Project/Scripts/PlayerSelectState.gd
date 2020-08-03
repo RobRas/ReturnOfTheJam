@@ -53,3 +53,20 @@ func _input(event):
 			if ally.selectable:
 				enabled = false
 				_ally_selected_state.enter(ally)
+	
+	"""
+	TEMPORARY reversal testing
+	"""
+	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed:
+		print("CLci")
+		if not _map.is_valid_world_position(event.position):
+			return
+			
+		var tile = _map.get_tile_from_world(event.position)
+		print("valid tile")
+		if tile.current_state == tile_script.State.UNIT_ALLY:
+			print("ally")
+			var ally = tile.unit
+			if not ally.selectable:
+				print("ally selectable")
+				ally.reverse()

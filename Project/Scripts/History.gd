@@ -1,35 +1,40 @@
 extends Node2D
 
-signal reversal_completed
+signal execution_completed(command)
+signal reversal_completed(command)
 
-var _reversing = false
-var _current_action
+var _current_command
 
-func add_action(action_node):
-	add_child(action_node)
-	move_child(action_node, 0)
+func execute_command(command_node):
+	add_child(command_node)
+	move_child(command_node, 0)
+	command_node.connect("execution_completed", self, "_on_command_execution_completed")
+	command_node.execute()
 
 func can_reverse():
-	return not _reversing and has_reversable_action() and peek_action().can_reverse()
+	print(_current_command)
+	return has_reversable_command() and peek_command().can_reverse()
 
-func reverse():
-	_current_action = pop_action()
-	_reversing = true
-	_current_action.connect("reversal_completed", self, "_on_action_reversal_completed")
-	_current_action.reverse()
+func reverse_command():
+	var command = pop_command()
+	command.connect("execution_completed", self, "_on_command_reversal_completed")
+	command.reverse()
 
-func has_reversable_action():
+func has_reversable_command():
 	return get_child_count() > 0
 
-func peek_action():
+func peek_command():
 	return get_child(0)
 
-func pop_action():
+func pop_command():
 	var node = get_child(0)
 	remove_child(node)
 	return node
 
-func _on_action_reversal_completed():
-	_current_action.disconnect("reversal_completed", self, "_on_action_reversal_completed")
-	_reversing = false
-	emit_signal("reversal_completed")
+func _on_command_execution_completed(command):
+	command.disconnect("execution_completed", self, "_on_command_execution_completed")
+	emit_signal("execution_completed", command)
+
+func _on_command_reversal_completed(command):
+	command.disconnect("execution_completed", self, "_on_command_reversal_completed")
+	emit_signal("reversal_completed", command)
