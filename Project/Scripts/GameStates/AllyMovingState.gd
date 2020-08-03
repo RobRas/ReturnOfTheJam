@@ -19,11 +19,8 @@ func enter(ally, path):
 	enabled = true
 	_ally = ally
 	_path = path
-	_ally.connect("destination_reached", self, "_on_destination_reached")
 	_ally.move_along_path(path)
-
-func _on_destination_reached(tile):
+	yield(_ally, "destination_reached")
 	_pathfinder.clear_search()
-	_ally.disconnect("destination_reached", self, "_on_destination_reached")
 	enabled = false
 	_player_selected_state.enter()

@@ -7,7 +7,7 @@ signal destination_reached(tile)
 var current_tile
 var selectable = true
 
-const _tile_script = preload("res://Scripts/Tile.gd")
+const _tile_script = preload("res://Scripts/Tiles/Tile.gd")
 
 
 func _ready():

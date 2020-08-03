@@ -8,5 +8,5 @@ var enabled = false
 func _ready():
 	_player_select_state = get_node(player_select_state_path)
 
-func enter(ally):
+func enter(_ally):
 	_player_select_state.enter()

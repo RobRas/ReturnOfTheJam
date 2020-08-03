@@ -7,7 +7,7 @@ signal destination_reached(tile)
 var current_tile
 var enabled = false
 
-const _tile_script = preload("res://Scripts/Tile.gd")
+const _tile_script = preload("res://Scripts/Tiles/Tile.gd")
 
 
 func init(tile):

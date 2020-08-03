@@ -16,7 +16,7 @@ func _ready():
 func enter():
 	enabled = true
 
-func _process(delta): #delay for now so we can go back to player_select_state without still triggering its _input
+func _process(_delta): #delay for now so we can go back to player_select_state without still triggering its _input
 	if not enabled:
 		return
 	

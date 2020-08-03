@@ -3,7 +3,7 @@ extends Node2D
 var indicator_scene = preload("res://Scenes/Indicator.tscn")
 var _indicator
 
-var _indicator_script = preload("res://Scripts/Indicator.gd")
+var _indicator_script = preload("res://Scripts/Tiles/Indicator.gd")
 
 var map_position = Vector2()
 

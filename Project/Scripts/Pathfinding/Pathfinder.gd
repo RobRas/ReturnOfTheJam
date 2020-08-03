@@ -1,7 +1,7 @@
 extends Node2D
 
-var _indicator_script = preload("res://Scripts/Indicator.gd")
-var _tile_script = preload("res://Scripts/Tile.gd")
+var _indicator_script = preload("res://Scripts/Tiles/Indicator.gd")
+var _tile_script = preload("res://Scripts/Tiles/Tile.gd")
 
 export(NodePath) var players_node_path
 var _players_node

@@ -1,6 +1,6 @@
 extends Node2D
 
-var tile_script = preload("res://Scripts/Tile.gd")
+var tile_script = preload("res://Scripts/Tiles/Tile.gd")
 
 export(NodePath) var map_node_path
 var _map
