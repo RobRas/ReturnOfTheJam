@@ -34,3 +34,7 @@ func set_state(new_state):
 			var color = Color.yellow
 			color.a = _ACTIVE_ALPHA
 			$Sprite.modulate = color
+
+func clear_pathing():
+	if state == State.REACHABLE or state == State.PATH:
+		set_state(State.OPEN)

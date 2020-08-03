@@ -8,11 +8,19 @@ var _map
 export(NodePath) var ally_selected_state_path
 var _ally_selected_state
 
+export(NodePath) var baddy_turn_state_path
+var _baddy_turn_state
+
+export(NodePath) var pathfinder_path
+var _pathfinder
+
 var enabled = false
 
 func _ready():
 	_map = get_node(map_node_path)
 	_ally_selected_state = get_node(ally_selected_state_path)
+	_baddy_turn_state = get_node(baddy_turn_state_path)
+	_pathfinder = get_node(pathfinder_path)
 
 func enter():
 	enabled = true
@@ -24,7 +32,9 @@ func enter():
 			selectable_count -= 1
 	
 	if selectable_count == 0:
-		print("Baddy's turn")
+		enabled = false
+		_pathfinder.clear_search()
+		_baddy_turn_state.enter()
 	
 	
 

@@ -19,14 +19,10 @@ func init(tile):
 	set_current_tile(tile)
 	global_position = tile.global_position
 	$Movement.init($History)
-
-func _process(_delta):
-	"""
-	if enabled and Input.is_action_just_pressed("reverse"):
-		if $History.can_reverse():
-			$History.reverse()
-	"""
-	pass
+	
+func make_selectable():
+	selectable = true
+	current_tile.set_state(_tile_script.State.UNIT_ALLY)
 
 func move_along_path(path):
 	$Movement.move_along_path(path)

@@ -132,6 +132,8 @@ func display_path(path):
 			tile.set_indicator_state(_indicator_script.State.PATH)
 
 func clear_search():
+	if _starting_tile:
+		_starting_tile.set_indicator_to_default()
 	for tile in _current_tiles:
 		tile.find_node("PathData").clear()
 		tile.set_indicator_to_default()
