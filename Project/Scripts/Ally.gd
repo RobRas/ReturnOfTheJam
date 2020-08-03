@@ -33,11 +33,11 @@ func move_along_path(path):
 
 func set_current_tile(new_tile):
 	if (current_tile):
-		current_tile.set_state(_tile_script.State.OPEN)
 		current_tile.unit = null
+		current_tile.set_state(_tile_script.State.OPEN)
 	current_tile = new_tile
-	current_tile.set_state(_tile_script.State.UNIT_ALLY)
 	current_tile.unit = self
+	current_tile.set_state(_tile_script.State.UNIT_ALLY)
 
 
 func _on_Movement_destination_reached(tile):

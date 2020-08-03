@@ -40,6 +40,9 @@ func set_indicator_to_default():
 		State.BLOCKED:
 			_indicator.set_state(_indicator_script.State.DISABLED)
 		State.UNIT_ALLY:
-			_indicator.set_state(_indicator_script.State.ALLY)
+			if unit.selectable:
+				_indicator.set_state(_indicator_script.State.ALLY)
+			else:
+				_indicator.set_state(_indicator_script.State.DISABLED)
 		State.UNIT_BADDY:
 			_indicator.set_state(_indicator_script.State.BADDY)
