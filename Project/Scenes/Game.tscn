@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scenes/Baddy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Ally.tscn" type="PackedScene" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://Scripts/GameStates/AllyMovingState.gd" type="Script" id=21]
 [ext_resource path="res://Scripts/GameStates/AllyAbilitySelectionState.gd" type="Script" id=22]
 [ext_resource path="res://Scripts/GameStates/BaddyTurnState.gd" type="Script" id=23]
+[ext_resource path="res://Scripts/Cursor.gd" type="Script" id=24]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Walls.png 1"
@@ -225,6 +226,9 @@ position = Vector2( 465.187, 100.222 )
 [node name="Pathfinder" type="Node2D" parent="Map"]
 script = ExtResource( 13 )
 players_node_path = NodePath("../Allies")
+
+[node name="Cursor" type="Node2D" parent="Map"]
+script = ExtResource( 24 )
 
 [node name="GameState" type="Node2D" parent="."]
 script = ExtResource( 19 )

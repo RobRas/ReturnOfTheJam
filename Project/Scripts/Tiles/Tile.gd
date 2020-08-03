@@ -30,6 +30,9 @@ func set_state(new_state):
 	current_state = new_state
 	set_indicator_to_default()
 
+func select_indicator(new_select):
+	_indicator.select(new_select)
+
 func set_indicator_state(new_state):
 	_indicator.set_state(new_state)
 
