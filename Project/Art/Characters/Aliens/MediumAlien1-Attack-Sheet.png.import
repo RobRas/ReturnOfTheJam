@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/MediumAlien1-Attack-Sheet.png-daf69a31a478f0c2aa2e3174f6dd70d7.stex"
+path="res://.import/MediumAlien1-Attack-Sheet.png-7e2e545a9821468acf6761cfb802aa36.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Characters/Aliens/MediumAlien1/MediumAlien1-Attack-Sheet.png"
-dest_files=[ "res://.import/MediumAlien1-Attack-Sheet.png-daf69a31a478f0c2aa2e3174f6dd70d7.stex" ]
+source_file="res://Art/Characters/Aliens/MediumAlien1-Attack-Sheet.png"
+dest_files=[ "res://.import/MediumAlien1-Attack-Sheet.png-7e2e545a9821468acf6761cfb802aa36.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
