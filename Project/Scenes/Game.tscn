@@ -195,37 +195,37 @@
 9/shapes = [  ]
 9/z_index = 0
 
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 36 )
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 37 )
 region = Rect2( 0, 0, 32, 48 )
 
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 36 )
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 37 )
 region = Rect2( 32, 0, 32, 48 )
 
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 36 )
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 37 )
 region = Rect2( 64, 0, 32, 48 )
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 36 )
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 37 )
 region = Rect2( 96, 0, 32, 48 )
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 36 )
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 37 )
 region = Rect2( 128, 0, 32, 48 )
 
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 36 )
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 37 )
 region = Rect2( 160, 0, 32, 48 )
 
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 36 )
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 37 )
 region = Rect2( 192, 0, 32, 48 )
 
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
 "loop": true,
 "name": "default",
 "speed": 6.0
@@ -317,76 +317,77 @@ player_select_state_path = NodePath("../PlayerSelectState")
 position = Vector2( -88.3559, -65.2024 )
 frames = ExtResource( 25 )
 animation = "idle"
+frame = 3
 playing = true
 
 [node name="XAlien" type="AnimatedSprite" parent="."]
 position = Vector2( -49.4841, -25.8178 )
 frames = ExtResource( 26 )
 animation = "attack"
-frame = 13
+frame = 12
 playing = true
 
 [node name="FloatyAlien" type="AnimatedSprite" parent="."]
 position = Vector2( -163.41, 39.805 )
 frames = ExtResource( 27 )
 animation = "idle"
-frame = 9
+frame = 8
 playing = true
 
 [node name="ExplosionSheet" type="AnimatedSprite" parent="."]
 position = Vector2( -114.391, -20.3906 )
 frames = ExtResource( 28 )
-frame = 10
+frame = 9
 playing = true
 
 [node name="FireWall" type="AnimatedSprite" parent="."]
 position = Vector2( -98.6903, 32.2171 )
 frames = ExtResource( 29 )
-frame = 5
+frame = 4
 playing = true
 
 [node name="FlameAttack" type="AnimatedSprite" parent="."]
 position = Vector2( -174.077, -54.9822 )
 frames = ExtResource( 31 )
-frame = 10
+frame = 9
 playing = true
 
 [node name="KnockbackGrenade" type="AnimatedSprite" parent="."]
 position = Vector2( -43.2961, 23.0383 )
 frames = ExtResource( 32 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="PsychicXAttack" type="AnimatedSprite" parent="."]
 position = Vector2( -155.522, 107.574 )
 frames = ExtResource( 30 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="FlameSoldier" type="AnimatedSprite" parent="."]
 position = Vector2( -209.807, -59.1469 )
 frames = ExtResource( 33 )
 animation = "attack"
-frame = 6
+frame = 5
 playing = true
 
 [node name="GrenadeSoldier" type="AnimatedSprite" parent="."]
 position = Vector2( -40.8782, 79.9123 )
 frames = ExtResource( 34 )
 animation = "idle"
-frame = 3
+frame = 2
 playing = true
 
 [node name="SmallSoldier" type="AnimatedSprite" parent="."]
 position = Vector2( 11.0316, 167.712 )
 frames = ExtResource( 35 )
 animation = "ability"
+frame = 11
 playing = true
 
 [node name="BarbedWireDeploy" type="AnimatedSprite" parent="."]
 position = Vector2( 16.4276, 168.257 )
 frames = SubResource( 9 )
-frame = 1
 playing = true
 
 [node name="Cursor" parent="." instance=ExtResource( 36 )]
