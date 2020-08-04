@@ -123,7 +123,7 @@ script = ExtResource( 1 )
 position = Vector2( 2.57023, -3.65243 )
 frames = SubResource( 25 )
 animation = "Idle 2"
-frame = 4
+frame = 2
 playing = true
 
 [node name="Movement" parent="." instance=ExtResource( 3 )]
