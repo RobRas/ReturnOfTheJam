@@ -262,7 +262,7 @@ ally_ability_selection_state_patch = NodePath("../AllyAbilitySelectionState")
 
 [node name="AllyMovingState" type="Node2D" parent="GameState"]
 script = ExtResource( 21 )
-player_selected_state_path = NodePath("../PlayerSelectState")
+ally_ability_selection_state_path = NodePath("../AllyAbilitySelectionState")
 pathfinder_path = NodePath("../../Map/Pathfinder")
 
 [node name="AllyAbilitySelectionState" type="Node2D" parent="GameState"]
