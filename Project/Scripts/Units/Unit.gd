@@ -9,7 +9,7 @@ var current_tile
 var selectable = true
 
 const _tile_script = preload("res://Scripts/Tiles/Tile.gd")
-
+export(_tile_script.State) var tile_state
 
 func _ready():
 	$Movement.connect("movement_began", self, "_on_Movement_movement_began")
@@ -32,7 +32,7 @@ func reverse():
 	
 func make_selectable():
 	selectable = true
-	current_tile.set_state(_tile_script.State.UNIT_ALLY)
+	current_tile.set_state(tile_state)
 
 func move_along_path(path):
 	$Movement.move_along_path(path)
@@ -43,7 +43,7 @@ func set_current_tile(new_tile):
 		current_tile.set_state(_tile_script.State.OPEN)
 	current_tile = new_tile
 	current_tile.unit = self
-	current_tile.set_state(_tile_script.State.UNIT_ALLY)
+	current_tile.set_state(tile_state)
 
 
 func _on_Movement_destination_reached(tile):

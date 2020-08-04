@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Units/Unit.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Movement.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/History.tscn" type="PackedScene" id=4]
+
+[node name="Baddy" type="Node2D"]
+script = ExtResource( 1 )
+tile_state = 3
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+playing = true
+
+[node name="Movement" parent="." instance=ExtResource( 3 )]
+
+[node name="History" parent="." instance=ExtResource( 4 )]

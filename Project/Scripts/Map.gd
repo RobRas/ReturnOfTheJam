@@ -21,6 +21,10 @@ func _ready():
 			tile.init(cell_position, world_position, cell_index in blocker_tile_ids)
 			_map.push_back(tile)
 
+func init():
+	$YSort/Allies.init(self)
+	$YSort/Baddies.init(self)
+	$Pathfinder.init(self)
 
 func is_valid_map_position(map_position):
 	var index = _get_map_index(map_position)
@@ -50,10 +54,10 @@ func get_tiles():
 	return $Tiles.get_children()
 
 func get_allies():
-	return $Allies.get_children()
+	return $YSort/Allies.get_children()
 
 func get_baddies():
-	return $Baddies.get_children()
+	return $YSort/Baddies.get_children()
 
 func _get_map_index(map_position):
 	return map_position.y * _map_size.x + map_position.x
