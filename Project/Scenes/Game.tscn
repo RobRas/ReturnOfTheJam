@@ -313,4 +313,4 @@ rewinding_state_path = NodePath("../RewindingState")
 script = ExtResource( 27 )
 rewind_state_path = NodePath("../RewindState")
 
-[node name="AllyExecutionState" type="Node2D" parent="GameState"]
+[node name="AllyAbilityExecutionState" type="Node2D" parent="GameState"]

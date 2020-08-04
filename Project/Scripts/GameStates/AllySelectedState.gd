@@ -24,6 +24,7 @@ func _ready():
 	_ally_ability_selection_state = get_node(ally_ability_selection_state_patch)
 
 func enter(ally):
+	print("AllySelectedState: click a tile to move")
 	enabled = true
 	_ally = ally
 	_ally.selectable = false

@@ -20,6 +20,8 @@ func _ready():
 	_rewinding_state = get_node(rewinding_state_path)
 
 func enter():
+	print("RewindState: Click a unit to rewind it's action")
+	print(str(_current_rewinds) + " rewinds remaining")
 	enabled = true
 	if _current_rewinds == 0:
 		enabled = false

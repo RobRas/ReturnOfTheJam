@@ -27,7 +27,6 @@ func can_reverse():
 	return _movement_node.can_move()
 
 func reverse():
-	print(str(_starting_tile) + " -> " + str(_target_tile))
 	_movement_node.move_to_tile(_starting_tile)
 	yield(_movement_node, "movement_tween_completed")
 	emit_signal("new_tile_reached", _starting_tile)

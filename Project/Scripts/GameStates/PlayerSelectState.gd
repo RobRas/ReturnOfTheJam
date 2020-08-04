@@ -23,6 +23,7 @@ func _ready():
 	_pathfinder = get_node(pathfinder_path)
 
 func enter():
+	print("PlayerSelectState: Click an ally")
 	enabled = true
 	
 	var allies = _map.get_allies()

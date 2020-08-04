@@ -10,6 +10,11 @@ var enabled = false
 func _ready():
 	_player_select_state = get_node(player_select_state_path)
 
+func enter(ally):
+	print("AllyAbilitySelectionState: Abilities not yet implemented - press 'space' to continue")
+	_ally = ally
+	enabled = true
+
 func _process(delta):
 	if not enabled:
 		return
@@ -17,7 +22,3 @@ func _process(delta):
 	if Input.is_action_just_pressed("skip_ability"):
 		enabled = false
 		_player_select_state.enter()
-
-func enter(ally):
-	_ally = ally
-	enabled = true
