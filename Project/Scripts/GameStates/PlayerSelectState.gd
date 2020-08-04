@@ -35,8 +35,11 @@ func enter():
 		enabled = false
 		_pathfinder.clear_search()
 		_baddy_turn_state.enter()
-	
-	
+
+func refresh():
+	var allies = _map.get_allies()
+	for ally in allies:
+		ally.make_selectable()
 
 func _input(event):
 	if not enabled:

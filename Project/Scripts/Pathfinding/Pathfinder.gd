@@ -7,7 +7,6 @@ var _map
 
 var movement_range = 4
 
-var _starting_tile
 var _current_tiles = []
 
 enum DirectionType { STRAIGHT, DIAGONAL }
@@ -43,9 +42,7 @@ func init(map):
 	_map = map
 
 func set_starting_tile(starting_tile):
-	_starting_tile = starting_tile
-	var clicked_tile_position = _starting_tile.map_position
-	_current_tiles = get_moveable_tiles_in_range(clicked_tile_position, movement_range)
+	_current_tiles = get_moveable_tiles_in_range(starting_tile, movement_range)
 	for tile in _current_tiles:
 		if tile.current_state != _tile_script.State.OPEN:
 			continue
@@ -53,9 +50,11 @@ func set_starting_tile(starting_tile):
 
 
 
-func get_path_from_tile(tile):
+func get_path_from_tile(tile, pathable_tiles = null):
+	if not pathable_tiles:
+		pathable_tiles = _current_tiles
 	var path = []
-	if not tile in _current_tiles:
+	if not tile in pathable_tiles:
 		return path
 	var path_data = tile.find_node("PathData")
 	while path_data.previous_tile:
@@ -67,21 +66,15 @@ func get_path_from_tile(tile):
 	return path
 	
 
-func get_moveable_tiles_in_range(starting_map_position, max_distance):
+func get_moveable_tiles_in_range(starting_tile, max_distance):
 	clear_search()
 	var returned_tiles = []
 	
-	if not _map.is_valid_map_position(starting_map_position):
-		return returned_tiles
-	
-	_starting_tile = _map.get_tile_from_map(starting_map_position)
-	
-	clear_search()
 	var check_now = []
 	var check_next = []
 	
-	_starting_tile.find_node("PathData").distance = 0
-	check_now.push_back(_starting_tile)
+	starting_tile.find_node("PathData").distance = 0
+	check_now.push_back(starting_tile)
 	
 	while (check_now.size() > 0):
 		var current_tile = check_now.pop_front()

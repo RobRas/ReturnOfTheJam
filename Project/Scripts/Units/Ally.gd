@@ -3,6 +3,7 @@ extends Node2D
 signal movement_began
 signal tile_reached(tile)
 signal destination_reached(tile)
+signal reverse_completed
 
 var current_tile
 var selectable = true
@@ -20,10 +21,14 @@ func init(tile):
 	global_position = tile.global_position
 	$Movement.init($History)
 
+func can_rewind():
+	return $History.can_reverse()
+
 func reverse():
 	if $History.can_reverse():
-		print("reversable")
 		$History.reverse_command()
+		yield($History, "reverse_completed")
+		emit_signal("reverse_completed")
 	
 func make_selectable():
 	selectable = true
@@ -33,7 +38,6 @@ func move_along_path(path):
 	$Movement.move_along_path(path)
 
 func set_current_tile(new_tile):
-	print("SET_CURRENT")
 	if (current_tile):
 		current_tile.unit = null
 		current_tile.set_state(_tile_script.State.OPEN)
