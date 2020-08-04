@@ -44,7 +44,7 @@ func get_tile_from_world(world_position):
 	return get_tile_from_map(map_position)
 
 func get_tiles():
-	return _map
+	return $Tiles.get_children()
 
 func get_allies():
 	return $Allies.get_children()

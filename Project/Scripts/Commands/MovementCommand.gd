@@ -3,6 +3,8 @@ extends Node2D
 signal execution_completed(command)
 signal reverse_completed(command)
 
+signal new_tile_reached(tile)
+
 var _movement_node
 var _starting_tile
 var _target_tile
@@ -17,7 +19,8 @@ func can_execute():
 
 func execute():
 	_movement_node.move_to_tile(_target_tile)
-	yield(_movement_node, "tile_reached")
+	yield(_movement_node, "movement_tween_completed")
+	emit_signal("new_tile_reached", _target_tile)
 	emit_signal("execution_completed", self)
 
 func can_reverse():
@@ -25,5 +28,6 @@ func can_reverse():
 
 func reverse():
 	_movement_node.move_to_tile(_starting_tile)
-	yield(_movement_node, "tile_reached")
+	yield(_movement_node, "movement_tween_completed")
+	emit_signal("new_tile_reached", _starting_tile)
 	emit_signal("reverse_completed", self)

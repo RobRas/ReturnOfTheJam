@@ -23,7 +23,6 @@
 [ext_resource path="res://Scripts/GameStates/AllyMovingState.gd" type="Script" id=21]
 [ext_resource path="res://Scripts/GameStates/AllyAbilitySelectionState.gd" type="Script" id=22]
 [ext_resource path="res://Scripts/GameStates/BaddyTurnState.gd" type="Script" id=23]
-[ext_resource path="res://Scripts/Cursor.gd" type="Script" id=24]
 [ext_resource path="res://Art/SpriteFrames/teleport-alien.tres" type="SpriteFrames" id=25]
 [ext_resource path="res://Art/SpriteFrames/x-alien.tres" type="SpriteFrames" id=26]
 [ext_resource path="res://Art/SpriteFrames/floaty-alien.tres" type="SpriteFrames" id=27]
@@ -35,6 +34,7 @@
 [ext_resource path="res://Art/SpriteFrames/flame-soldier.tres" type="SpriteFrames" id=33]
 [ext_resource path="res://Art/SpriteFrames/grenade-soldier.tres" type="SpriteFrames" id=34]
 [ext_resource path="res://Art/SpriteFrames/small-soldier.tres" type="SpriteFrames" id=35]
+[ext_resource path="res://Scenes/Cursor.tscn" type="PackedScene" id=36]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Walls.png 1"
@@ -236,10 +236,6 @@ position = Vector2( 465.187, 100.222 )
 
 [node name="Pathfinder" type="Node2D" parent="Map"]
 script = ExtResource( 13 )
-players_node_path = NodePath("../Allies")
-
-[node name="Cursor" type="Node2D" parent="Map"]
-script = ExtResource( 24 )
 
 [node name="GameState" type="Node2D" parent="."]
 script = ExtResource( 19 )
@@ -291,38 +287,38 @@ playing = true
 position = Vector2( -49.4841, -25.8178 )
 frames = ExtResource( 26 )
 animation = "attack"
-frame = 10
+frame = 11
 playing = true
 
 [node name="FloatyAlien" type="AnimatedSprite" parent="."]
 position = Vector2( -163.41, 39.805 )
 frames = ExtResource( 27 )
 animation = "idle"
-frame = 6
+frame = 5
 playing = true
 
 [node name="ExplosionSheet" type="AnimatedSprite" parent="."]
 position = Vector2( -114.391, -20.3906 )
 frames = ExtResource( 28 )
-frame = 7
+frame = 6
 playing = true
 
 [node name="FireWall" type="AnimatedSprite" parent="."]
 position = Vector2( -98.6903, 32.2171 )
 frames = ExtResource( 29 )
-frame = 7
+frame = 5
 playing = true
 
 [node name="FlameAttack" type="AnimatedSprite" parent="."]
 position = Vector2( -188.409, -53.4797 )
 frames = ExtResource( 31 )
-frame = 4
+frame = 2
 playing = true
 
 [node name="KnockbackGrenade" type="AnimatedSprite" parent="."]
 position = Vector2( -43.2961, 23.0383 )
 frames = ExtResource( 32 )
-frame = 1
+frame = 4
 playing = true
 
 [node name="PsychicXAttack" type="AnimatedSprite" parent="."]
@@ -335,18 +331,22 @@ playing = true
 position = Vector2( -81.449, 91.5917 )
 frames = ExtResource( 33 )
 animation = "attack"
-frame = 2
+frame = 1
 playing = true
 
 [node name="GrenadeSoldier" type="AnimatedSprite" parent="."]
 position = Vector2( -40.8782, 79.9123 )
 frames = ExtResource( 34 )
 animation = "idle"
+frame = 3
 playing = true
 
 [node name="SmallSoldier" type="AnimatedSprite" parent="."]
 position = Vector2( -93.4359, 145.071 )
 frames = ExtResource( 35 )
 animation = "ability"
-frame = 9
+frame = 8
 playing = true
+
+[node name="Cursor" parent="." instance=ExtResource( 36 )]
+map_path = NodePath("../Map")

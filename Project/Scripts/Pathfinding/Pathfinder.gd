@@ -3,9 +3,6 @@ extends Node2D
 var _indicator_script = preload("res://Scripts/Tiles/Indicator.gd")
 var _tile_script = preload("res://Scripts/Tiles/Tile.gd")
 
-export(NodePath) var players_node_path
-var _players_node
-
 var _map
 
 var movement_range = 4
@@ -41,9 +38,6 @@ const _DIRECTION_WEIGHTS = {
 	_DIRECTIONS_TO_CHECK[6]: _DIRECTION_WEIGHT_VALUES[DirectionType.DIAGONAL],
 	_DIRECTIONS_TO_CHECK[7]: _DIRECTION_WEIGHT_VALUES[DirectionType.DIAGONAL],
 }
-
-func _ready():
-	_players_node = get_node(players_node_path)
 
 func init(map):
 	_map = map
@@ -123,18 +117,19 @@ func get_moveable_tiles_in_range(starting_map_position, max_distance):
 	return returned_tiles
 
 func display_path(path):
-	if _current_tiles.size() > 0:
-		for tile in _current_tiles:
-			if tile.current_state != _tile_script.State.OPEN:
-				continue
-			tile.set_indicator_state(_indicator_script.State.REACHABLE)
-		for tile in path:
-			tile.set_indicator_state(_indicator_script.State.PATH)
+	hide_path()
+	for tile in path:
+		tile.set_indicator_state(_indicator_script.State.PATH)
+
+func hide_path():
+	for tile in _current_tiles:
+		if tile.current_state != _tile_script.State.OPEN:
+			continue
+		tile.set_indicator_state(_indicator_script.State.REACHABLE)
 
 func clear_search():
-	if _starting_tile:
-		_starting_tile.set_indicator_to_default()
-	for tile in _current_tiles:
+	var tiles = _map.get_tiles()
+	for tile in tiles:
 		tile.find_node("PathData").clear()
 		tile.set_indicator_to_default()
 	_current_tiles.clear()
