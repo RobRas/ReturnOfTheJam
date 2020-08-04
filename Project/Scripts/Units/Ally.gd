@@ -33,7 +33,7 @@ func move_along_path(path):
 	$Movement.move_along_path(path)
 
 func set_current_tile(new_tile):
-	print("Calling set tile")
+	print("SET_CURRENT")
 	if (current_tile):
 		current_tile.unit = null
 		current_tile.set_state(_tile_script.State.OPEN)

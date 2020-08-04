@@ -14,6 +14,7 @@ export(NodePath) var ally_ability_selection_state_patch
 var _ally_ability_selection_state
 
 var _ally
+var _current_tile
 var enabled = false
 
 func _ready():
@@ -26,7 +27,10 @@ func enter(ally):
 	enabled = true
 	_ally = ally
 	_ally.selectable = false
+	_current_tile = ally.current_tile
 	_pathfinder.set_starting_tile(_ally.current_tile)
+	_display_path(_ally.current_tile)
+	
 
 func _input(event):
 	if not enabled:
@@ -51,5 +55,10 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		if _map.is_valid_world_position(event.position):
 			var tile = _map.get_tile_from_world(event.position)
-			var path = _pathfinder.get_path_from_tile(tile)
-			_pathfinder.display_path(path)
+			if tile != _current_tile:
+				_current_tile = tile
+				_display_path(tile)
+
+func _display_path(tile):
+	var path = _pathfinder.get_path_from_tile(tile)
+	_pathfinder.display_path(path)
