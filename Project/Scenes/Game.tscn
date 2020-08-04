@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scenes/Baddy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Ally.tscn" type="PackedScene" id=2]
@@ -25,6 +25,8 @@
 [ext_resource path="res://Scripts/GameStates/BaddyTurnState.gd" type="Script" id=23]
 [ext_resource path="res://Art/Tilemap/Walls/JustFloor.Png" type="Texture" id=24]
 [ext_resource path="res://Art/Tilemap/Walls/Doors.png" type="Texture" id=25]
+[ext_resource path="res://Scripts/GameStates/RewindState.gd" type="Script" id=26]
+[ext_resource path="res://Scripts/GameStates/RewindingState.gd" type="Script" id=27]
 [ext_resource path="res://Scenes/Cursor.tscn" type="PackedScene" id=36]
 
 [sub_resource type="TileSet" id=1]
@@ -288,7 +290,7 @@ ally_ability_selection_state_patch = NodePath("../AllyAbilitySelectionState")
 
 [node name="AllyMovingState" type="Node2D" parent="GameState"]
 script = ExtResource( 21 )
-player_selected_state_path = NodePath("../PlayerSelectState")
+ally_ability_selection_state_path = NodePath("../AllyAbilitySelectionState")
 pathfinder_path = NodePath("../../Map/Pathfinder")
 
 [node name="AllyAbilitySelectionState" type="Node2D" parent="GameState"]
@@ -297,11 +299,18 @@ player_select_state_path = NodePath("../PlayerSelectState")
 
 [node name="BaddyTurnState" type="Node2D" parent="GameState"]
 script = ExtResource( 23 )
+rewind_state_path = NodePath("../RewindState")
 map_path = NodePath("../../Map")
-player_select_state_path = NodePath("../PlayerSelectState")
+pathfinder_path = NodePath("../../Map/Pathfinder")
 
 [node name="RewindState" type="Node2D" parent="GameState"]
+script = ExtResource( 26 )
+map_path = NodePath("../../Map")
+player_select_state_path = NodePath("../PlayerSelectState")
+rewinding_state_path = NodePath("../RewindingState")
 
 [node name="RewindingState" type="Node2D" parent="GameState"]
+script = ExtResource( 27 )
+rewind_state_path = NodePath("../RewindState")
 
 [node name="AllyExecutionState" type="Node2D" parent="GameState"]

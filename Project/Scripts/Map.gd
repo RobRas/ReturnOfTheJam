@@ -43,11 +43,17 @@ func get_tile_from_world(world_position):
 	var map_position = world_to_map(world_position)
 	return get_tile_from_map(map_position)
 
+func get_map_position_from_tile(tile):
+	return world_to_map(tile.global_position)
+
 func get_tiles():
 	return $Tiles.get_children()
 
 func get_allies():
 	return $Allies.get_children()
+
+func get_baddies():
+	return $Baddies.get_children()
 
 func _get_map_index(map_position):
 	return map_position.y * _map_size.x + map_position.x
