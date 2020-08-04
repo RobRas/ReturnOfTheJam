@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scenes/Baddy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Ally.tscn" type="PackedScene" id=2]
@@ -23,17 +23,6 @@
 [ext_resource path="res://Scripts/GameStates/AllyMovingState.gd" type="Script" id=21]
 [ext_resource path="res://Scripts/GameStates/AllyAbilitySelectionState.gd" type="Script" id=22]
 [ext_resource path="res://Scripts/GameStates/BaddyTurnState.gd" type="Script" id=23]
-[ext_resource path="res://Art/SpriteFrames/teleport-alien.tres" type="SpriteFrames" id=25]
-[ext_resource path="res://Art/SpriteFrames/x-alien.tres" type="SpriteFrames" id=26]
-[ext_resource path="res://Art/SpriteFrames/floaty-alien.tres" type="SpriteFrames" id=27]
-[ext_resource path="res://Art/SpriteFrames/explosion.tres" type="SpriteFrames" id=28]
-[ext_resource path="res://Art/SpriteFrames/fire-wall.tres" type="SpriteFrames" id=29]
-[ext_resource path="res://Art/SpriteFrames/psychic-x-attack-sheet.tres" type="SpriteFrames" id=30]
-[ext_resource path="res://Art/SpriteFrames/flame-attack.tres" type="SpriteFrames" id=31]
-[ext_resource path="res://Art/SpriteFrames/knockback-grenade-sheet.tres" type="SpriteFrames" id=32]
-[ext_resource path="res://Art/SpriteFrames/flame-soldier.tres" type="SpriteFrames" id=33]
-[ext_resource path="res://Art/SpriteFrames/grenade-soldier.tres" type="SpriteFrames" id=34]
-[ext_resource path="res://Art/SpriteFrames/small-soldier.tres" type="SpriteFrames" id=35]
 [ext_resource path="res://Scenes/Cursor.tscn" type="PackedScene" id=36]
 
 [sub_resource type="TileSet" id=1]
@@ -279,75 +268,3 @@ player_select_state_path = NodePath("../PlayerSelectState")
 [node name="RewindingState" type="Node2D" parent="GameState"]
 
 [node name="AllyExecutionState" type="Node2D" parent="GameState"]
-
-[node name="TeleportAlien" type="AnimatedSprite" parent="."]
-position = Vector2( -88.3559, -65.2024 )
-frames = ExtResource( 25 )
-animation = "idle"
-frame = 3
-playing = true
-
-[node name="XAlien" type="AnimatedSprite" parent="."]
-position = Vector2( -49.4841, -25.8178 )
-frames = ExtResource( 26 )
-animation = "attack"
-frame = 7
-playing = true
-
-[node name="FloatyAlien" type="AnimatedSprite" parent="."]
-position = Vector2( -163.41, 39.805 )
-frames = ExtResource( 27 )
-animation = "idle"
-frame = 1
-playing = true
-
-[node name="ExplosionSheet" type="AnimatedSprite" parent="."]
-position = Vector2( -114.391, -20.3906 )
-frames = ExtResource( 28 )
-frame = 2
-playing = true
-
-[node name="FireWall" type="AnimatedSprite" parent="."]
-position = Vector2( -98.6903, 32.2171 )
-frames = ExtResource( 29 )
-frame = 1
-playing = true
-
-[node name="FlameAttack" type="AnimatedSprite" parent="."]
-position = Vector2( -188.409, -53.4797 )
-frames = ExtResource( 31 )
-frame = 14
-playing = true
-
-[node name="KnockbackGrenade" type="AnimatedSprite" parent="."]
-position = Vector2( -43.2961, 23.0383 )
-frames = ExtResource( 32 )
-frame = 2
-playing = true
-
-[node name="PsychicXAttack" type="AnimatedSprite" parent="."]
-position = Vector2( -155.522, 107.574 )
-frames = ExtResource( 30 )
-frame = 9
-playing = true
-
-[node name="FlameSoldier" type="AnimatedSprite" parent="."]
-position = Vector2( -81.449, 91.5917 )
-frames = ExtResource( 33 )
-animation = "attack"
-frame = 12
-playing = true
-
-[node name="GrenadeSoldier" type="AnimatedSprite" parent="."]
-position = Vector2( -40.8782, 79.9123 )
-frames = ExtResource( 34 )
-animation = "idle"
-frame = 11
-playing = true
-
-[node name="SmallSoldier" type="AnimatedSprite" parent="."]
-position = Vector2( -93.4359, 145.071 )
-frames = ExtResource( 35 )
-animation = "ability"
-frame = 4
-playing = true
