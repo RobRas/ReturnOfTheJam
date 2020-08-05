@@ -3,8 +3,6 @@
 [ext_resource path="res://Scripts/Tiles/Tile.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Pathfinding/PathData.gd" type="Script" id=2]
 
-
-
 [node name="Tile" type="Node2D"]
 script = ExtResource( 1 )
 

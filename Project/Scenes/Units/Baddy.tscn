@@ -6,7 +6,7 @@
 
 [node name="Baddy" type="Node2D"]
 script = ExtResource( 1 )
-tile_state = 3
+faction = 1
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 playing = true

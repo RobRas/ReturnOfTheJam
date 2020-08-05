@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Scenes/Units/Humans/GrenadeSoldier.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Units/Aliens/TeleportAlien.tscn" type="PackedScene" id=2]
@@ -31,7 +31,6 @@
 [ext_resource path="res://Scenes/Units/Aliens/FloatyAlien.tscn" type="PackedScene" id=29]
 [ext_resource path="res://Scenes/Units/Humans/SmallSoldier.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Scenes/Units/Aliens/XAlien.tscn" type="PackedScene" id=31]
-[ext_resource path="res://Audio/Theme/FinalTheme.ogg" type="AudioStream" id=32]
 [ext_resource path="res://Scenes/Cursor.tscn" type="PackedScene" id=36]
 
 [sub_resource type="TileSet" id=1]
@@ -330,7 +329,3 @@ script = ExtResource( 27 )
 rewind_state_path = NodePath("../RewindState")
 
 [node name="AllyAbilityExecutionState" type="Node2D" parent="GameState"]
-
-[node name="MainTheme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 32 )
-volume_db = -12.0

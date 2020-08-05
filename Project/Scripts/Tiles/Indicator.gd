@@ -5,38 +5,43 @@ const _ACTIVE_ALPHA = 1.0
 
 const _SELECT_GROWTH_DURATION = 0.5
 
-enum State { DISABLED, OPEN, ALLY, BADDY, REACHABLE, PATH }
+enum State { NONE, OPEN, ALLY, BADDY, HAZARD }
 var state
+
+enum PathingData { NONE, REACHABLE, PATH }
+var pathing_data = PathingData.NONE
 
 var _selected = false
 		
 
 func set_state(new_state):
 	state = new_state
-	var color = modulate
 	
 	match(state):
-		State.DISABLED:
-			color = Color.white
-			color.a = 0
+		State.NONE:
+			modulate = Color.white
+			modulate.a = 0
 		State.OPEN:
-			color = Color.white
-			color.a = _PASSIVE_ALPHA
+			modulate = Color.white
+			modulate.a = _PASSIVE_ALPHA
 		State.ALLY:
-			color = Color.green
-			color.a = _ACTIVE_ALPHA
+			modulate = Color.green
+			modulate.a = _ACTIVE_ALPHA
 		State.BADDY:
-			color = Color.red
-			color.a = _ACTIVE_ALPHA
-		State.REACHABLE:
-			color = Color.blue
-			color.a = _ACTIVE_ALPHA
-		State.PATH:
-			color = Color.yellow
-			color.a = _ACTIVE_ALPHA
-	
-	modulate = color
+			modulate = Color.red
+			modulate.a = _ACTIVE_ALPHA
+		State.HAZARD:
+			modulate = Color.orange
+			modulate.a = _ACTIVE_ALPHA
 
-func clear_pathing():
-	if state == State.REACHABLE or state == State.PATH:
-		set_state(State.OPEN)
+func set_pathing_data(data):
+	pathing_data = data
+	match(pathing_data):
+		PathingData.NONE:
+			set_state(state)
+		PathingData.REACHABLE:
+			modulate = Color.blue
+			modulate.a = _ACTIVE_ALPHA
+		PathingData.PATH:
+			modulate = Color.yellow
+			modulate.a = _ACTIVE_ALPHA

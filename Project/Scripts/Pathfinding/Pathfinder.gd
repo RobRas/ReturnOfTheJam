@@ -44,9 +44,7 @@ func init(map):
 func set_starting_tile(starting_tile):
 	_current_tiles = get_moveable_tiles_in_range(starting_tile, movement_range)
 	for tile in _current_tiles:
-		if tile.current_state != _tile_script.State.OPEN:
-			continue
-		tile.set_indicator_state(_indicator_script.State.REACHABLE)
+		tile.set_pathing_data(_indicator_script.PathingData.REACHABLE)
 
 
 
@@ -90,7 +88,7 @@ func get_moveable_tiles_in_range(starting_tile, max_distance):
 			if next_tile_path_data.distance <= current_tile_path_data.distance + _DIRECTION_WEIGHTS[direction]:
 				continue
 			
-			if not next_tile.current_state == _tile_script.State.OPEN:
+			if not next_tile.filter_pathing():
 				continue
 			
 			next_tile_path_data.distance = current_tile_path_data.distance + _DIRECTION_WEIGHTS[direction];
@@ -112,17 +110,15 @@ func get_moveable_tiles_in_range(starting_tile, max_distance):
 func display_path(path):
 	hide_path()
 	for tile in path:
-		tile.set_indicator_state(_indicator_script.State.PATH)
+		tile.set_pathing_data(_indicator_script.PathingData.PATH)
 
 func hide_path():
 	for tile in _current_tiles:
-		if tile.current_state != _tile_script.State.OPEN:
-			continue
-		tile.set_indicator_state(_indicator_script.State.REACHABLE)
+		if tile.get_pathing_data() == _indicator_script.PathingData.PATH:
+			tile.set_pathing_data(_indicator_script.PathingData.REACHABLE)
 
 func clear_search():
 	var tiles = _map.get_tiles()
 	for tile in tiles:
-		tile.find_node("PathData").clear()
-		tile.set_indicator_to_default()
+		tile.set_pathing_data(_indicator_script.PathingData.NONE)
 	_current_tiles.clear()
