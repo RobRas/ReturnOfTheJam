@@ -13,6 +13,9 @@ func _ready():
 func enter(ally):
 	print("AllyAbilitySelectionState: Abilities not yet implemented - press 'space' to continue")
 	_ally = ally
+	for ability in _ally.get_node("Abilities").get_children():
+		ability.connect("used", self, "_on_ability_used")
+		ability.start_using()
 	enabled = true
 
 func _process(delta):
@@ -20,5 +23,11 @@ func _process(delta):
 		return
 	
 	if Input.is_action_just_pressed("skip_ability"):
+		enabled = false
+		_player_select_state.enter()
+
+func _on_ability_used():
+	for ability in _ally.get_node("Abilities").get_children():
+		ability.disconnect("used", self, "_on_ability_used")
 		enabled = false
 		_player_select_state.enter()

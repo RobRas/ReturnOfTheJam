@@ -10,6 +10,7 @@ var map_position = Vector2()
 enum State { OPEN, BLOCKED, UNIT_ALLY, UNIT_BADDY }
 var current_state = State.OPEN
 var unit = null
+var hazard = null
 
 func init(cell_position, world_position, block):
 	map_position = cell_position
@@ -25,6 +26,9 @@ func init(cell_position, world_position, block):
 	_indicator.global_position = world_position
 	
 	set_indicator_to_default()
+
+func is_placeable():
+	return current_state == State.OPEN and hazard == null
 
 func set_state(new_state):
 	current_state = new_state

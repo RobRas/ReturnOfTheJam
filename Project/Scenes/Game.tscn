@@ -272,6 +272,9 @@ position = Vector2( 121.893, 180.113 )
 [node name="XAlien" parent="Map/YSort/Baddies" instance=ExtResource( 31 )]
 position = Vector2( 392.195, 61.8814 )
 
+[node name="Hazards" type="YSort" parent="Map/YSort"]
+z_index = 3
+
 [node name="Tiles" type="Node2D" parent="Map"]
 z_index = 1
 

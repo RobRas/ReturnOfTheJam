@@ -16,10 +16,12 @@ func _ready():
 	$Movement.connect("tile_reached", self, "_on_Movement_tile_reached")
 	$Movement.connect("destination_reached", self, "_on_Movement_destination_reached")
 
-func init(tile):
+func init(tile, map):
 	set_current_tile(tile)
 	global_position = tile.global_position
 	$Movement.init($History)
+	for ability in $Abilities.get_children():
+		ability.init(self, map)
 
 func can_rewind():
 	return $History.can_reverse()

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Art/SpriteFrames/small-soldier.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Scenes/Units/Ally.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Abilities/ThrowBarbedWire.gd" type="Script" id=3]
 
 [node name="SmallSoldier" instance=ExtResource( 2 )]
 
@@ -9,4 +10,7 @@
 position = Vector2( 0, -5 )
 frames = ExtResource( 1 )
 animation = "idle"
-frame = 11
+frame = 3
+
+[node name="ThrowBarbedWire" type="Node2D" parent="Abilities" index="0"]
+script = ExtResource( 3 )
