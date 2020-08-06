@@ -36,6 +36,7 @@ func _input(event):
 		_current_tile = tile
 	
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed and _current_tile:
+		"""
 		if _current_tile == _unit.current_tile:
 			return
 		
@@ -71,8 +72,9 @@ func _input(event):
 					tiles.push_back(target_tile)
 		
 		var command = flame_wall_ability_command_scene.instance()
-		command.init(tiles, _map)
+		command.init(_current_tile, _map)
 		_history.execute_command(command)
 		yield(_history, "execution_completed")
 		using = false
+		"""
 		emit_signal("used")

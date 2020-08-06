@@ -10,7 +10,7 @@
 position = Vector2( 0, -5 )
 frames = ExtResource( 1 )
 animation = "idle"
-frame = 3
+frame = 5
 
 [node name="ThrowBarbedWire" type="Node2D" parent="Abilities" index="0"]
 script = ExtResource( 3 )
