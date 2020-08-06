@@ -2,7 +2,7 @@ extends Node2D
 
 signal used
 
-const throw_barbed_wire_command_scene = preload("res://Scenes/Commands/ThrowBarbedWireCommand.tscn")
+const flame_wall_ability_command_scene = preload("res://Scenes/Commands/FlameWallAbilityCommand.tscn")
 
 var using = false
 
@@ -70,7 +70,7 @@ func _input(event):
 				if target_tile.is_placeable():
 					tiles.push_back(target_tile)
 		
-		var command = throw_barbed_wire_command_scene.instance()
+		var command = flame_wall_ability_command_scene.instance()
 		command.init(tiles, _map)
 		_history.execute_command(command)
 		yield(_history, "execution_completed")

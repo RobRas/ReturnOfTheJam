@@ -10,7 +10,7 @@ const _TILE_SIZE = 16
 
 export(float) var tiles_per_second = 0.2
 
-var _movement_command = preload("res://Scenes/MovementCommand.tscn")
+var _movement_command = preload("res://Scenes/Commands/MovementCommand.tscn")
 
 var _history
 var _moving = false

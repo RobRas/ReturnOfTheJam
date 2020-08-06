@@ -52,6 +52,10 @@ func add_hazard(new_hazard):
 	hazard = new_hazard
 	_set_indicator_state()
 
+func remove_hazard():
+	hazard = null
+	_set_indicator_state()
+
 func get_pathing_data():
 	return _indicator.pathing_data
 
