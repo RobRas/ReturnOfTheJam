@@ -21,7 +21,7 @@ func init(tile, map):
 	global_position = tile.global_position
 	$Movement.init($History)
 	for ability in $Abilities.get_children():
-		ability.init(self, map)
+		ability.init(self, map, $History)
 
 func can_rewind():
 	return $History.can_reverse()

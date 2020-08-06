@@ -17,9 +17,10 @@ func reverse_command():
 	if not can_reverse():
 		return
 	
-	var command = pop_command()
+	var command = peek_command()
 	command.reverse()
 	yield(command, "reverse_completed")
+	pop_command()
 	emit_signal("reverse_completed", command)
 
 func has_reversable_command():
