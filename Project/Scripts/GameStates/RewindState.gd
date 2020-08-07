@@ -45,9 +45,9 @@ func _input(event):
 			return
 		
 		var unit = tile.unit
-		if not unit.can_rewind():
+		if not unit.can_rewind(_current_rewinds):
 			return
 		
-		_current_rewinds -= 1
+		_current_rewinds -= unit.get_rewind_cost()
 		enabled = false
 		_rewinding_state.enter(unit)

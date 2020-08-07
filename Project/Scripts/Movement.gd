@@ -21,14 +21,14 @@ func init(history):
 func can_move():
 	return not _moving
 
-func move_along_path(path):
+func move_along_path(path, cost):
 	if path.size() == 0:
 		return
 	_moving = true
 	emit_signal("movement_began")
-	_execute_next_path_tile(path.duplicate())
+	_execute_next_path_tile(path.duplicate(), cost)
 
-func _execute_next_path_tile(path):
+func _execute_next_path_tile(path, cost = 1):
 	if path.size() == 0:
 		return
 	if path.size() == 1:
@@ -38,6 +38,7 @@ func _execute_next_path_tile(path):
 	
 	var command = _movement_command.instance()
 	command.init(self, path.pop_front(), path[0])
+	command.cost = cost
 	command.connect("new_tile_reached", self, "_on_command_new_tile_reached")
 	command.connect("reverse_completed", self, "_on_command_reverse_completed")
 	_history.execute_command(command)

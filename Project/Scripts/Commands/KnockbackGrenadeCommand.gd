@@ -3,6 +3,8 @@ extends Node2D
 const _EXPLOSION_ANIMATION = preload("res://Scenes/Explosion.tscn")
 const _MOVE_COMMAND = preload("res://Scenes/Commands/MovementCommand.tscn")
 
+var cost = 1
+
 const _EXPLOSION_DIRECTIONS = [
 	Vector2(1,1),
 	Vector2(1,0),
@@ -41,12 +43,14 @@ signal reverse_completed(command)
 
 var _target_tile_position
 var _map
+var _user
 
 var _units_to_wait_for_path = 0
 
 var _explosion_animation
 
-func init(target_tile, map):
+func init(user, target_tile, map):
+	_user = user
 	_map = map
 	_target_tile_position = _map.get_map_position_from_tile(target_tile)
 
@@ -77,13 +81,17 @@ func execute():
 			continue
 		
 		var push_to_tile = _map.get_tile_from_map(push_to_tile_position)
-		if not push_to_tile.is_placeable(): # change this function to check for hazards/other units
+		if push_to_tile.permanent_blocked:
 			continue
 		
 		_units_to_wait_for_path += 1
 		var pushed_unit = push_from_tile.unit
 		pushed_unit.connect("destination_reached", self, "_on_unit_destination_reached")
-		pushed_unit.move_along_path([push_from_tile, push_to_tile])
+		
+		if pushed_unit == _user:
+			pushed_unit.move_along_path([push_from_tile, push_to_tile], 0)
+		else:
+			pushed_unit.move_along_path([push_from_tile, push_to_tile])
 	
 	if _units_to_wait_for_path == 0:
 		yield(get_tree(), "idle_frame") # Needed for History's yield
@@ -109,6 +117,10 @@ func reverse():
 		if not pull_from_tile.unit:
 			continue
 		
+		var pulled_unit = pull_from_tile.unit
+		if pulled_unit == _user:
+			continue
+		
 		var pull_to_tile_position = _target_tile_position + _PULL_TILES[pull_tile]
 		if not _map.is_valid_map_position(pull_to_tile_position):
 			continue
@@ -118,7 +130,6 @@ func reverse():
 			continue
 		
 		_units_to_wait_for_path += 1
-		var pulled_unit = pull_from_tile.unit
 		print(pulled_unit)
 		pulled_unit.connect("destination_reached", self, "_on_unit_destination_reached_reverse")
 		pulled_unit.move_along_path([pull_from_tile, pull_to_tile])

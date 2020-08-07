@@ -1,5 +1,6 @@
 extends Node2D
 
+var cost = 1
 
 const _EXPLOSION_DIRECTIONS = [
 	Vector2(1,1),

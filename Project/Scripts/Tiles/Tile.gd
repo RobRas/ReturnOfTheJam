@@ -41,6 +41,8 @@ func is_placeable():
 			not hazard)
 
 func add_unit(new_unit):
+	if hazard:
+		hazard.collide(new_unit)
 	unit = new_unit
 	_set_indicator_state()
 
@@ -49,6 +51,8 @@ func remove_unit():
 	_set_indicator_state()
 
 func add_hazard(new_hazard):
+	if unit:
+		new_hazard.collide(unit)
 	hazard = new_hazard
 	_set_indicator_state()
 

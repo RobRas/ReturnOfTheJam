@@ -39,8 +39,12 @@ func _input(event):
 		if _current_tile == _unit.current_tile:
 			return
 		
+		if not _map.is_valid_world_position(event.position):
+			return
+		
+		var tile = _map.get_tile_from_world(event.position)
 		var command = knockback_grenade_command_scene.instance()
-		command.init(_current_tile, _map)
+		command.init(_unit, tile, _map)
 		_history.execute_command(command)
 		yield(_history, "execution_completed")
 		using = false

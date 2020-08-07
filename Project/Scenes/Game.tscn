@@ -254,7 +254,10 @@ script = ExtResource( 17 )
 position = Vector2( 149.686, 163.484 )
 
 [node name="GrenadeSoldier" parent="Map/YSort/Allies" instance=ExtResource( 1 )]
-position = Vector2( 89.0591, 188.989 )
+position = Vector2( 56.4459, 201.951 )
+
+[node name="GrenadeSoldier2" parent="Map/YSort/Allies" instance=ExtResource( 1 )]
+position = Vector2( 112.474, 259.651 )
 
 [node name="SmallSoldier" parent="Map/YSort/Allies" instance=ExtResource( 30 )]
 position = Vector2( 132.961, 88.2229 )

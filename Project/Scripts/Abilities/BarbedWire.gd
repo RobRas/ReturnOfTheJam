@@ -1,5 +1,7 @@
 extends Node2D
 
+const DAMAGE_VALUE = 2
+
 var _tile
 
 func init(tile):
@@ -8,5 +10,7 @@ func init(tile):
 func filter_pathing():
 	return false
 
-func on_collision(unit):
-	pass
+func collide(unit):
+	unit.damage(DAMAGE_VALUE)
+	_tile.remove_hazard()
+	queue_free()

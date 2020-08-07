@@ -9,6 +9,8 @@ var _movement_node
 var _starting_tile
 var _target_tile
 
+var cost = 1
+
 func init(movement_node, starting_tile, target_tile):
 	_movement_node = movement_node
 	_starting_tile = starting_tile

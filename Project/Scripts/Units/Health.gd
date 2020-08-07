@@ -10,8 +10,8 @@ var current_health setget _set_current_health, _get_current_health
 var _dead = false
 
 func _ready():
-	$TextureProgress.max_value = max_health
-	$TextureProgress.value = max_health
+	$Bar.max_value = max_health
+	$Bar.value = max_health
 	current_health = max_health
 
 func _set_current_health(new_value):
@@ -20,7 +20,7 @@ func _set_current_health(new_value):
 	
 	var greater = new_value > current_health
 	current_health = min(new_value, max_health)
-	$ProgressBar.value = max(current_health, 0)
+	$Bar.value = max(current_health, 0)
 	if greater:
 		emit_signal("health_gained")
 		if _dead and current_health > 0:

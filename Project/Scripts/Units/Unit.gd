@@ -1,5 +1,7 @@
 extends Node2D
 
+const _modify_health_command = preload("res://Scenes/Commands/ModifyHealthCommand.tscn")
+
 signal movement_began
 signal tile_reached(tile)
 signal destination_reached(tile)
@@ -7,6 +9,8 @@ signal reverse_completed
 
 var current_tile
 var selectable = true
+
+var current_health setget _set_current_health, _get_current_health
 
 const _tile_script = preload("res://Scripts/Tiles/Tile.gd")
 export(int, "Ally", "Baddy") var faction
@@ -23,32 +27,39 @@ func init(tile, map):
 	for ability in $Abilities.get_children():
 		ability.init(self, map, $History)
 
-func get_current_health():
-	return $Health.current_health
+func damage(amount):
+	var command = _modify_health_command.instance()
+	command.init(self, -amount)
+	$History.execute_command(command)
 
-func set_current_health(new_value):
-	$Health.current_health = new_value 
+func can_rewind(remaining_rewinds):
+	return $History.can_reverse(remaining_rewinds)
 
-func can_rewind():
-	return $History.can_reverse()
+func get_rewind_cost():
+	return $History.get_reverse_cost()
 
 func reverse():
-	if $History.can_reverse():
-		$History.reverse_command()
-		yield($History, "reverse_completed")
-		emit_signal("reverse_completed")
+	$History.reverse_command()
+	yield($History, "reverse_completed")
+	emit_signal("reverse_completed")
 	
 func make_selectable():
 	selectable = true
 
-func move_along_path(path):
-	$Movement.move_along_path(path)
+func move_along_path(path, reverse_cost = 1):
+	$Movement.move_along_path(path, reverse_cost)
 
 func set_current_tile(new_tile):
 	if (current_tile):
 		current_tile.remove_unit()
 	current_tile = new_tile
 	current_tile.add_unit(self)
+
+func _set_current_health(value):
+	$Health.current_health = value
+
+func _get_current_health():
+	return $Health.current_health
 
 
 func _on_Movement_destination_reached(tile):
