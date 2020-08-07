@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SmallAlienXSummon.wav-876d0c3840fb699abbeb41c8b9ab7018.sample"
+
+[deps]
+
+source_file="res://Audio/Aliens/SmallAlien/SmallAlienXSummon.wav"
+dest_files=[ "res://.import/SmallAlienXSummon.wav-876d0c3840fb699abbeb41c8b9ab7018.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

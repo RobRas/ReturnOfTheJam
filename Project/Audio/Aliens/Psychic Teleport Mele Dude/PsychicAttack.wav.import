@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PsychicAttack.wav-0f5b6a8160cac504525d4145be56b30d.sample"
+
+[deps]
+
+source_file="res://Audio/Aliens/Psychic Teleport Mele Dude/PsychicAttack.wav"
+dest_files=[ "res://.import/PsychicAttack.wav-0f5b6a8160cac504525d4145be56b30d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
