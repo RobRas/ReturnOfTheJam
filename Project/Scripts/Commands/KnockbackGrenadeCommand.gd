@@ -38,6 +38,8 @@ const _PULL_TILES = {
 	Vector2( 1, 2): Vector2( 0, 1),
 }
 
+const _COLLISION_DAMAGE = 1
+
 signal execution_completed(command)
 signal reverse_completed(command)
 
@@ -74,19 +76,25 @@ func execute():
 			
 		var push_from_tile = _map.get_tile_from_map(push_from_tile_position)
 		
-		if not push_from_tile.unit:
-			continue
-		
 		var push_to_tile_position = push_from_tile_position + direction
 		if not _map.is_valid_map_position(push_to_tile_position):
 			continue
 		
+		if not push_from_tile.unit:
+			continue
+		
+		var pushed_unit = push_from_tile.unit
 		var push_to_tile = _map.get_tile_from_map(push_to_tile_position)
 		if push_to_tile.permanent_blocked:
+			pushed_unit.damage(_COLLISION_DAMAGE)
+			continue
+		
+		if push_to_tile.unit:
+			pushed_unit.damage(_COLLISION_DAMAGE)
+			push_to_tile.unit.damage(_COLLISION_DAMAGE)
 			continue
 		
 		_units_to_wait_for_path += 1
-		var pushed_unit = push_from_tile.unit
 		pushed_unit.connect("destination_reached", self, "_on_unit_destination_reached")
 		
 		if pushed_unit == _user:
@@ -117,21 +125,26 @@ func reverse():
 		
 		if not pull_from_tile.unit:
 			continue
-		
 		var pulled_unit = pull_from_tile.unit
-		if pulled_unit == _user:
-			continue
 		
 		var pull_to_tile_position = _target_tile_position + _PULL_TILES[pull_tile]
 		if not _map.is_valid_map_position(pull_to_tile_position):
 			continue
 		
 		var pull_to_tile = _map.get_tile_from_map(pull_to_tile_position)
-		if not pull_to_tile.is_placeable(): # change this function to check for hazards/other units
+		if pull_to_tile.permanent_blocked:
+			pulled_unit.damage(_COLLISION_DAMAGE)
+			continue
+		
+		if pull_to_tile.unit:
+			pulled_unit.damage(_COLLISION_DAMAGE)
+			pull_to_tile.unit.damage(_COLLISION_DAMAGE)
+			continue
+		
+		if pulled_unit == _user:
 			continue
 		
 		_units_to_wait_for_path += 1
-		print(pulled_unit)
 		pulled_unit.connect("destination_reached", self, "_on_unit_destination_reached_reverse")
 		pulled_unit.move_along_path([pull_from_tile, pull_to_tile])
 	
@@ -150,7 +163,6 @@ func _on_unit_destination_reached_reverse(tile):
 	tile.unit.disconnect("destination_reached", self, "_on_unit_destination_reached_reverse")
 	_units_to_wait_for_path -= 1
 	if _units_to_wait_for_path == 0:
-		print("Reverse complted")
 		emit_signal("reverse_completed", self)
 
 func _on_explosion_animation_finished():
