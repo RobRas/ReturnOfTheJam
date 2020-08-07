@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Scenes/Units/Humans/GrenadeSoldier.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Units/Aliens/TeleportAlien.tscn" type="PackedScene" id=2]
@@ -31,6 +31,7 @@
 [ext_resource path="res://Scenes/Units/Aliens/FloatyAlien.tscn" type="PackedScene" id=29]
 [ext_resource path="res://Scenes/Units/Humans/SmallSoldier.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Scenes/Units/Aliens/XAlien.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Art/OnTileEffects/TimeGlass.Png" type="Texture" id=32]
 [ext_resource path="res://Scenes/Cursor.tscn" type="PackedScene" id=36]
 
 [sub_resource type="TileSet" id=1]
@@ -284,6 +285,7 @@ z_index = 2
 map_path = NodePath("..")
 
 [node name="GameState" type="Node2D" parent="."]
+position = Vector2( 623.626, 20.2579 )
 script = ExtResource( 19 )
 __meta__ = {
 "_edit_group_": true
@@ -329,3 +331,7 @@ script = ExtResource( 27 )
 rewind_state_path = NodePath("../RewindState")
 
 [node name="AllyAbilityExecutionState" type="Node2D" parent="GameState"]
+
+[node name="Sprite" type="Sprite" parent="GameState"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 32 )
