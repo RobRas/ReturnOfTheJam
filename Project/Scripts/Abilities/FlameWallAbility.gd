@@ -11,6 +11,8 @@ var _map
 var _current_tile
 var _history
 
+const _TILE_COUNT = 3
+
 func init(unit, map, history):
 	_unit = unit
 	_map = map
@@ -39,45 +41,34 @@ func _input(event):
 		_current_tile = tile
 	
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed and _current_tile:
-		"""
 		if _current_tile == _unit.current_tile:
 			return
 		
+		var _unit_position = _map.get_map_position_from_tile(_unit.current_tile)
+		var _tile_position = _map.get_map_position_from_tile(_current_tile)
+		
+		var offset = _tile_position - _unit_position
+		if offset.x != 0 and offset.y != 0 and abs(offset.x) != abs(offset.y):
+			return
+		
+		offset.x = clamp(offset.x, -1, 1)
+		offset.y = clamp(offset.y, -1, 1)
+		
 		var tiles = []
-		var mouse_tile_position = _map.get_map_position_from_tile(_current_tile)
-		var unit_tile_position = _map.get_map_position_from_tile(_unit.current_tile)
-		var tile_displacement = mouse_tile_position - unit_tile_position
-		if (abs(tile_displacement.x) >= abs(tile_displacement.y)):
-			var middle_tile_position = unit_tile_position + Vector2(clamp(tile_displacement.x, -1, 1), 0)
-			var tile_positions = [middle_tile_position]
-			tile_positions.push_back(Vector2(middle_tile_position.x, middle_tile_position.y + 1))
-			tile_positions.push_back(Vector2(middle_tile_position.x, middle_tile_position.y - 1))
-			tile_positions.push_back(Vector2(unit_tile_position.x, unit_tile_position.y + 1))
-			tile_positions.push_back(Vector2(unit_tile_position.x, unit_tile_position.y - 1))
-			for tile_position in tile_positions:
-				if not _map.is_valid_map_position(tile_position):
-					continue
-				var target_tile = _map.get_tile_from_map(tile_position)
-				if target_tile.is_placeable():
-					tiles.push_back(target_tile)
-		else:
-			var middle_tile_position = unit_tile_position + Vector2(0, clamp(tile_displacement.y, -1, 1))
-			var tile_positions = [middle_tile_position]
-			tile_positions.push_back(Vector2(middle_tile_position.x + 1, middle_tile_position.y))
-			tile_positions.push_back(Vector2(middle_tile_position.x - 1, middle_tile_position.y))
-			tile_positions.push_back(Vector2(unit_tile_position.x + 1, unit_tile_position.y))
-			tile_positions.push_back(Vector2(unit_tile_position.x - 1, unit_tile_position.y))
-			for tile_position in tile_positions:
-				if not _map.is_valid_map_position(tile_position):
-					continue
-				var target_tile = _map.get_tile_from_map(tile_position)
-				if target_tile.is_placeable():
-					tiles.push_back(target_tile)
+		for i in range(_TILE_COUNT):
+			var tile_position = _unit_position + (i + 1) * offset
+			if not _map.is_valid_map_position(tile_position):
+				continue
+			var target_tile = _map.get_tile_from_map(tile_position)
+			if target_tile.is_placeable():
+				tiles.push_back(target_tile)
+		
+		if tiles.size() == 0:
+			return
 		
 		var command = flame_wall_ability_command_scene.instance()
-		command.init(_current_tile, _map)
+		command.init(_unit.get_node("FlamePivot"), offset, tiles, _map)
 		_history.execute_command(command)
 		yield(_history, "execution_completed")
 		using = false
-		"""
 		emit_signal("used")

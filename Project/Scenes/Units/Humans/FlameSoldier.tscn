@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Art/SpriteFrames/flame-soldier.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Scenes/Units/Ally.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/Abilities/FlameWallAbility.gd" type="Script" id=3]
+[ext_resource path="res://Art/SpriteFrames/flame-attack.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://Scenes/Units/Humans/FlameWallAbility.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/Abilities/FlamePivot.gd" type="Script" id=5]
 
 [node name="FlameSoldier" instance=ExtResource( 2 )]
 
@@ -10,7 +12,15 @@
 position = Vector2( 0, -9 )
 frames = ExtResource( 1 )
 animation = "idle"
-frame = 7
+frame = 8
 
-[node name="FlameWallAbility" type="Node2D" parent="Abilities" index="0"]
-script = ExtResource( 3 )
+[node name="FlameWallAbility" parent="Abilities" index="0" instance=ExtResource( 4 )]
+
+[node name="FlamePivot" type="Node2D" parent="." index="6"]
+visible = false
+script = ExtResource( 5 )
+
+[node name="Flame" type="AnimatedSprite" parent="FlamePivot" index="0"]
+position = Vector2( 42, 0 )
+frames = ExtResource( 3 )
+animation = "reverse"

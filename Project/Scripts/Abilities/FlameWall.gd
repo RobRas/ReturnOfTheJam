@@ -1,16 +1,14 @@
 extends Node2D
 
+const DAMAGE_VALUE = 1
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var _tile
 
+func init(tile):
+	_tile = tile
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func filter_pathing():
+	return false
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func collide(unit):
+	unit.damage(DAMAGE_VALUE)
