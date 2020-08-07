@@ -12,7 +12,14 @@ enum PathingData { NONE, REACHABLE, PATH }
 var pathing_data = PathingData.NONE
 
 var _selected = false
-		
+var _show_open = true
+
+func set_show_open(show):
+	if _show_open == show:
+		return
+	_show_open = show
+	if pathing_data == PathingData.NONE:
+		set_state(state)
 
 func set_state(new_state):
 	state = new_state
@@ -23,7 +30,10 @@ func set_state(new_state):
 			modulate.a = 0
 		State.OPEN:
 			modulate = Color.white
-			modulate.a = _PASSIVE_ALPHA
+			if _show_open:
+				modulate.a = _PASSIVE_ALPHA
+			else:
+				modulate.a = 0
 		State.ALLY:
 			modulate = Color.green
 			modulate.a = _ACTIVE_ALPHA

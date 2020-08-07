@@ -20,6 +20,9 @@ func init(unit, map, history):
 func start_using():
 	using = true
 
+func stop_using():
+	using = false
+
 func _input(event):
 	if not using:
 		return

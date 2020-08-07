@@ -25,6 +25,7 @@ func _ready():
 func enter():
 	print("PlayerSelectState: Click an ally")
 	enabled = true
+	_map.set_show_open_tiles(false)
 	
 	var allies = _map.get_allies()
 	var selectable_count = allies.size()

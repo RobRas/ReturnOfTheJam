@@ -26,6 +26,7 @@ func _ready():
 func enter(ally):
 	print("AllySelectedState: click a tile to move")
 	enabled = true
+	_map.set_show_open_tiles(true)
 	_ally = ally
 	_ally.selectable = false
 	_current_tile = ally.current_tile

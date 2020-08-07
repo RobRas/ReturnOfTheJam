@@ -1,5 +1,9 @@
 extends Node2D
 
+signal entered
+signal exited
+signal current_changed(new_value)
+
 export(NodePath) var map_path
 var _map
 
@@ -21,16 +25,20 @@ func _ready():
 
 func enter():
 	print("RewindState: Click a unit to rewind it's action")
+	_map.set_show_open_tiles(false)
 	print(str(_current_rewinds) + " rewinds remaining")
 	enabled = true
+	emit_signal("entered")
 	if _current_rewinds == 0:
 		enabled = false
 		_player_select_state.refresh()
 		_player_select_state.enter()
+		emit_signal("exited")
 		return
 
 func refresh():
 	_current_rewinds = _total_rewinds
+	emit_signal("current_changed", _current_rewinds)
 
 func _input(event):
 	if not enabled:
@@ -49,5 +57,6 @@ func _input(event):
 			return
 		
 		_current_rewinds -= unit.get_rewind_cost()
+		emit_signal("current_changed", _current_rewinds)
 		enabled = false
 		_rewinding_state.enter(unit)

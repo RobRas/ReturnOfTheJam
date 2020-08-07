@@ -59,5 +59,9 @@ func get_allies():
 func get_baddies():
 	return $YSort/Baddies.get_children()
 
+func set_show_open_tiles(show):
+	for tile in _map:
+		tile.set_show_open_areas(show)
+
 func _get_map_index(map_position):
 	return map_position.y * _map_size.x + map_position.x

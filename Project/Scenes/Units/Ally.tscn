@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Units/Unit.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Units/Health.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Movement.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/History.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/Units/HurtAudio.gd" type="Script" id=5]
+[ext_resource path="res://Audio/Humans/HumanHurt1.wav" type="AudioStream" id=6]
+[ext_resource path="res://Audio/Humans/HumanHurt2.wav" type="AudioStream" id=7]
 
 [node name="Ally" type="Node2D"]
 script = ExtResource( 1 )
@@ -19,3 +22,13 @@ playing = true
 
 [node name="Health" parent="." instance=ExtResource( 2 )]
 position = Vector2( -1, -20 )
+
+[node name="HurtAudio" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="HurtAudio"]
+stream = ExtResource( 6 )
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="HurtAudio"]
+stream = ExtResource( 7 )
+[connection signal="health_lost" from="Health" to="HurtAudio" method="_on_Health_health_lost"]

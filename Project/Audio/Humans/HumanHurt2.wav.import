@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/HumanHurt2.wav-74b79ad69418eb12da66357f92ed5dfa.sample"
+
+[deps]
+
+source_file="res://Audio/Humans/HumanHurt2.wav"
+dest_files=[ "res://.import/HumanHurt2.wav-74b79ad69418eb12da66357f92ed5dfa.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

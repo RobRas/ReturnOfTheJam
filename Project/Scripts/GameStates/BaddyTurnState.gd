@@ -21,6 +21,8 @@ func _ready():
 func enter():
 	enabled = true
 	_baddies = _map.get_baddies()
+	$AudioStreamPlayer.play()
+	_map.set_show_open_tiles(false)
 	for baddy in _baddies:
 		var starting_tile = baddy.current_tile
 		var pathable_tiles = _pathfinder.get_moveable_tiles_in_range(starting_tile, 5)
@@ -34,6 +36,7 @@ func _on_baddy_destination_reached(tile, baddy):
 	baddy.disconnect("destination_reached", self, "_on_baddy_destination_reached")
 	_baddies.erase(baddy)
 	if _baddies.size() == 0:
+		$AudioStreamPlayer.stop()
 		enabled = false
 		_rewind_state.refresh()
 		_rewind_state.enter()

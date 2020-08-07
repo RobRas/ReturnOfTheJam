@@ -68,6 +68,9 @@ func set_pathing_data(pathing_data):
 		$PathData.clear()
 	_indicator.set_pathing_data(pathing_data)
 
+func set_show_open_areas(show):
+	_indicator.set_show_open(show)
+
 func _set_indicator_state():
 	if permanent_blocked:
 		_indicator.set_state(_indicator_script.State.NONE)

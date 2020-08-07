@@ -18,6 +18,7 @@ func can_execute():
 	return true
 
 func execute():
+	$AudioStreamPlayer.play()
 	for tile in _target_tiles:
 		var barbed_wire_node = barbed_wire_scene.instance()
 		_map.get_node("YSort/Hazards").add_child(barbed_wire_node)

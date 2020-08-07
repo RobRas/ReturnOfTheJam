@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Scenes/Units/Humans/GrenadeSoldier.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Units/Aliens/TeleportAlien.tscn" type="PackedScene" id=2]
@@ -32,7 +32,11 @@
 [ext_resource path="res://Scenes/Units/Humans/SmallSoldier.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Scenes/Units/Aliens/XAlien.tscn" type="PackedScene" id=31]
 [ext_resource path="res://Art/OnTileEffects/TimeGlass.Png" type="Texture" id=32]
+[ext_resource path="res://Audio/Humans/HumanSoldierMovement.wav" type="AudioStream" id=33]
+[ext_resource path="res://Audio/Aliens/AlienMovement.wav" type="AudioStream" id=34]
+[ext_resource path="res://Audio/Theme/FinalTheme.ogg" type="AudioStream" id=35]
 [ext_resource path="res://Scenes/Cursor.tscn" type="PackedScene" id=36]
+[ext_resource path="res://Scripts/ResetCounter.gd" type="Script" id=37]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Walls.png 1"
@@ -257,9 +261,6 @@ position = Vector2( 149.686, 163.484 )
 [node name="GrenadeSoldier" parent="Map/YSort/Allies" instance=ExtResource( 1 )]
 position = Vector2( 56.4459, 201.951 )
 
-[node name="GrenadeSoldier2" parent="Map/YSort/Allies" instance=ExtResource( 1 )]
-position = Vector2( 112.474, 259.651 )
-
 [node name="SmallSoldier" parent="Map/YSort/Allies" instance=ExtResource( 30 )]
 position = Vector2( 132.961, 88.2229 )
 
@@ -288,7 +289,6 @@ z_index = 2
 map_path = NodePath("..")
 
 [node name="GameState" type="Node2D" parent="."]
-position = Vector2( 623.626, 20.2579 )
 script = ExtResource( 19 )
 __meta__ = {
 "_edit_group_": true
@@ -312,9 +312,14 @@ ally_ability_selection_state_patch = NodePath("../AllyAbilitySelectionState")
 script = ExtResource( 21 )
 ally_ability_selection_state_path = NodePath("../AllyAbilitySelectionState")
 pathfinder_path = NodePath("../../Map/Pathfinder")
+map_path = NodePath("../../Map")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameState/AllyMovingState"]
+stream = ExtResource( 33 )
 
 [node name="AllyAbilitySelectionState" type="Node2D" parent="GameState"]
 script = ExtResource( 22 )
+map_node_path = NodePath("../../Map")
 player_select_state_path = NodePath("../PlayerSelectState")
 
 [node name="BaddyTurnState" type="Node2D" parent="GameState"]
@@ -322,6 +327,9 @@ script = ExtResource( 23 )
 rewind_state_path = NodePath("../RewindState")
 map_path = NodePath("../../Map")
 pathfinder_path = NodePath("../../Map/Pathfinder")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameState/BaddyTurnState"]
+stream = ExtResource( 34 )
 
 [node name="RewindState" type="Node2D" parent="GameState"]
 script = ExtResource( 26 )
@@ -332,9 +340,30 @@ rewinding_state_path = NodePath("../RewindingState")
 [node name="RewindingState" type="Node2D" parent="GameState"]
 script = ExtResource( 27 )
 rewind_state_path = NodePath("../RewindState")
+map_node_path = NodePath("../../Map")
 
 [node name="AllyAbilityExecutionState" type="Node2D" parent="GameState"]
 
-[node name="Sprite" type="Sprite" parent="GameState"]
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 35 )
+volume_db = -9.664
+
+[node name="ResetCounter" type="Node2D" parent="."]
+position = Vector2( 306.231, 327.794 )
+script = ExtResource( 37 )
+
+[node name="Hourglass" type="Sprite" parent="ResetCounter"]
+position = Vector2( 14.7702, 5.75787 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 32 )
+
+[node name="Label" type="Label" parent="ResetCounter"]
+margin_right = 16.0
+margin_bottom = 14.0
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="current_changed" from="GameState/RewindState" to="ResetCounter" method="_on_RewindState_current_changed"]
+[connection signal="entered" from="GameState/RewindState" to="ResetCounter" method="_on_RewindState_entered"]
+[connection signal="exited" from="GameState/RewindState" to="ResetCounter" method="_on_RewindState_exited"]

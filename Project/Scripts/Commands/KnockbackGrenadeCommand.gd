@@ -58,6 +58,7 @@ func can_execute():
 	return true
 
 func execute():
+	$AudioStreamPlayer.play()
 	_explosion_animation = _EXPLOSION_ANIMATION.instance()
 	_explosion_animation.animation = "default"
 	_explosion_animation.connect("animation_finished", self, "_on_explosion_animation_finished")

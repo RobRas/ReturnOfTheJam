@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/AlienHurt2.wav-92c8726185ff44eb65842ca56bf7eb81.sample"
+
+[deps]
+
+source_file="res://Audio/Aliens/AlienHurt2.wav"
+dest_files=[ "res://.import/AlienHurt2.wav-92c8726185ff44eb65842ca56bf7eb81.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
