@@ -57,8 +57,9 @@ func _input(event):
 				if not _map.is_valid_map_position(tile_position):
 					continue
 				var target_tile = _map.get_tile_from_map(tile_position)
-				if target_tile.is_placeable():
-					tiles.push_back(target_tile)
+				if target_tile.permanent_blocked or target_tile.unit:
+					continue
+				tiles.push_back(target_tile)
 		else:
 			var middle_tile_position = unit_tile_position + Vector2(0, clamp(tile_displacement.y, -1, 1))
 			var tile_positions = [middle_tile_position]
@@ -70,8 +71,9 @@ func _input(event):
 				if not _map.is_valid_map_position(tile_position):
 					continue
 				var target_tile = _map.get_tile_from_map(tile_position)
-				if target_tile.is_placeable():
-					tiles.push_back(target_tile)
+				if target_tile.permanent_blocked or target_tile.unit:
+					continue
+				tiles.push_back(target_tile)
 		
 		var command = throw_barbed_wire_command_scene.instance()
 		command.init(tiles, _map)

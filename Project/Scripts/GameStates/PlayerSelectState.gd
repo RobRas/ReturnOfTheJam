@@ -30,7 +30,7 @@ func enter():
 	var allies = _map.get_allies()
 	var selectable_count = allies.size()
 	for ally in allies:
-		if not ally.selectable:
+		if not ally.selectable or ally.dead:
 			selectable_count -= 1
 	
 	if selectable_count == 0:
@@ -55,6 +55,6 @@ func _input(event):
 		
 		if tile.unit and tile.unit.faction == 0:
 			var ally = tile.unit
-			if ally.selectable:
+			if ally.selectable and not ally.dead:
 				enabled = false
 				_ally_selected_state.enter(ally)

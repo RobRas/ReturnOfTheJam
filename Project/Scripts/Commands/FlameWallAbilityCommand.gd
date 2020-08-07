@@ -17,6 +17,7 @@ var dir_to_rot = {
 	Vector2( 0, -1): 270,
 	Vector2( 1, -1): 315
 }
+var _flames = {}
 
 var _flame_pivot
 var _rotation
@@ -42,6 +43,7 @@ func execute():
 		fire_wall_node.global_position = tile.global_position
 		fire_wall_node.init(tile)
 		tile.add_hazard(fire_wall_node)
+		_flames[tile] = fire_wall_node
 	yield(get_tree(), "idle_frame")
 	emit_signal("execution_completed", self)
 
@@ -54,10 +56,10 @@ func reverse():
 	for tile in _target_tiles:
 		if not tile:
 			continue
-		var flame = tile.hazard
-		if not flame:
+		if not _flames.has(tile):
 			continue
+		var flame = _flames[tile]
+		tile.remove_hazard(flame)
 		flame.queue_free()
-		tile.remove_hazard()
 	yield(get_tree(), "idle_frame")
 	emit_signal("reverse_completed", self)

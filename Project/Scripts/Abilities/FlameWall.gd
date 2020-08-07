@@ -7,7 +7,7 @@ var _tile
 func init(tile):
 	_tile = tile
 
-func filter_pathing():
+func allow_pathing():
 	return false
 
 func collide(unit):

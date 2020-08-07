@@ -24,6 +24,8 @@ func enter():
 	$AudioStreamPlayer.play()
 	_map.set_show_open_tiles(false)
 	for baddy in _baddies:
+		if baddy.dead:
+			continue
 		var starting_tile = baddy.current_tile
 		var pathable_tiles = _pathfinder.get_moveable_tiles_in_range(starting_tile, 5)
 		var tile_index = randi() % pathable_tiles.size()

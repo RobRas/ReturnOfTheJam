@@ -2,6 +2,7 @@ extends Node2D
 
 signal used
 
+const FlameWall = preload("res://Scripts/Abilities/FlameWall.gd")
 const flame_wall_ability_command_scene = preload("res://Scenes/Commands/FlameWallAbilityCommand.tscn")
 
 var using = false
@@ -60,8 +61,9 @@ func _input(event):
 			if not _map.is_valid_map_position(tile_position):
 				continue
 			var target_tile = _map.get_tile_from_map(tile_position)
-			if target_tile.is_placeable():
-				tiles.push_back(target_tile)
+			if target_tile.permanent_blocked or target_tile.has_hazard_type(FlameWall):
+				continue
+			tiles.push_back(target_tile)
 		
 		if tiles.size() == 0:
 			return

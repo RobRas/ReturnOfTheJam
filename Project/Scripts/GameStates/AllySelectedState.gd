@@ -44,8 +44,8 @@ func _input(event):
 			if tile == _ally.current_tile:
 				_pathfinder.clear_search()
 				enabled = false
-				if tile.hazard:
-					tile.hazard.collide(_ally)
+				for hazard in tile.hazards:
+					hazard.collide(_ally)
 				_ally_ability_selection_state.enter(_ally)
 				return
 			

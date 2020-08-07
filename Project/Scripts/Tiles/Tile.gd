@@ -12,7 +12,7 @@ var map_position = Vector2()
 
 var permanent_blocked = false
 var unit = null
-var hazard = null
+var hazards = []
 
 func init(cell_position, world_position, blocked):
 	map_position = cell_position
@@ -31,18 +31,21 @@ func filter_pathing():
 		return false
 	if unit:
 		return false
-	if hazard:
-		return hazard.filter_pathing()
+	if hazards.size() > 0:
+		for hazard in hazards:
+			if not hazard.allow_pathing():
+				return false
+		return true
 	return true
 
 func is_placeable():
 	return (not permanent_blocked and
 			not unit and
-			not hazard)
+			not hazards.size() == 0)
 
 func add_unit(new_unit):
-	if hazard:
-		hazard.collide(new_unit)
+	for i in range(hazards.size()-1, -1, -1):
+		hazards[i].collide(new_unit)
 	unit = new_unit
 	_set_indicator_state()
 
@@ -53,12 +56,18 @@ func remove_unit():
 func add_hazard(new_hazard):
 	if unit:
 		new_hazard.collide(unit)
-	hazard = new_hazard
+	hazards.push_back(new_hazard)
 	_set_indicator_state()
 
-func remove_hazard():
-	hazard = null
+func remove_hazard(hazard):
+	hazards.erase(hazard)
 	_set_indicator_state()
+
+func has_hazard_type(type):
+	for hazard in hazards:
+		if hazard is type:
+			return true
+	return false
 
 func get_pathing_data():
 	return _indicator.pathing_data
@@ -75,11 +84,14 @@ func _set_indicator_state():
 	if permanent_blocked:
 		_indicator.set_state(_indicator_script.State.NONE)
 	elif unit:
+		if unit.dead:
+			_indicator.set_state(_indicator_script.NONE)
+			return
 		if unit.faction == 0:
 			_indicator.set_state(_indicator_script.State.ALLY)
 		else:
 			_indicator.set_state(_indicator_script.State.BADDY)
-	elif hazard:
+	elif hazards.size() > 0:
 		_indicator.set_state(_indicator_script.State.HAZARD)
 	else:
 		_indicator.set_state(_indicator_script.State.OPEN)

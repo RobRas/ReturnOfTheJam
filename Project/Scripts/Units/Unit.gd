@@ -10,6 +10,8 @@ signal reverse_completed
 var current_tile
 var selectable = true
 
+var dead = false
+
 var current_health setget _set_current_health, _get_current_health
 
 const _tile_script = preload("res://Scripts/Tiles/Tile.gd")
@@ -19,6 +21,8 @@ func _ready():
 	$Movement.connect("movement_began", self, "_on_Movement_movement_began")
 	$Movement.connect("tile_reached", self, "_on_Movement_tile_reached")
 	$Movement.connect("destination_reached", self, "_on_Movement_destination_reached")
+	$Health.connect("died", self, "_on_unit_died")
+	$Health.connect("revived", self, "_on_unit_revived")
 
 func init(tile, map):
 	set_current_tile(tile)
@@ -71,3 +75,15 @@ func _on_Movement_movement_began():
 func _on_Movement_tile_reached(tile):
 	set_current_tile(tile)
 	emit_signal("tile_reached", tile)
+
+func _on_unit_died():
+	dead = true
+	rotation_degrees = -90
+	$Sprite.stop()
+	$Health/Bar.visible = false
+
+func _on_unit_revived():
+	dead = false
+	rotation_degrees = 0
+	$Sprite.play()
+	$Health/Bar.visible = true
