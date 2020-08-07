@@ -14,6 +14,28 @@ const _EXPLOSION_DIRECTIONS = [
 	Vector2(-1,-1)
 ]
 
+const _PULL_TILES = {
+	Vector2(-2,-2): Vector2(-1,-1),
+	Vector2(-2,-1): Vector2(-1, 0),
+	Vector2(-2, 0): Vector2(-1, 0),
+	Vector2(-2, 1): Vector2(-1, 0),
+	Vector2(-2, 2): Vector2(-1, 1),
+	
+	Vector2(-1,-2): Vector2( 0,-1),
+	Vector2( 0,-2): Vector2( 0,-1),
+	Vector2( 1,-2): Vector2( 0,-1),
+	
+	Vector2( 2,-2): Vector2( 1,-1),
+	Vector2( 2,-1): Vector2( 1, 0),
+	Vector2( 2, 0): Vector2( 1, 0),
+	Vector2( 2, 1): Vector2( 1, 0),
+	Vector2( 2, 2): Vector2( 1, 1),
+	
+	Vector2(-1, 2): Vector2( 0, 1),
+	Vector2( 0, 2): Vector2( 0, 1),
+	Vector2( 1, 2): Vector2( 0, 1),
+}
+
 signal execution_completed(command)
 signal reverse_completed(command)
 
@@ -77,8 +99,8 @@ func reverse():
 	_explosion_animation.play()
 	
 	_units_to_wait_for_path = 0
-	for direction in _EXPLOSION_DIRECTIONS:
-		var pull_from_tile_position = _target_tile_position + direction + direction
+	for pull_tile in _PULL_TILES.keys():
+		var pull_from_tile_position = _target_tile_position + pull_tile
 		if not _map.is_valid_map_position(pull_from_tile_position):
 			continue
 			
@@ -87,7 +109,7 @@ func reverse():
 		if not pull_from_tile.unit:
 			continue
 		
-		var pull_to_tile_position = pull_from_tile_position - direction
+		var pull_to_tile_position = _target_tile_position + _PULL_TILES[pull_tile]
 		if not _map.is_valid_map_position(pull_to_tile_position):
 			continue
 		

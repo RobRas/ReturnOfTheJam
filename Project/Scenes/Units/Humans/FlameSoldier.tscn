@@ -10,7 +10,7 @@
 position = Vector2( 0, -9 )
 frames = ExtResource( 1 )
 animation = "idle"
-frame = 10
+frame = 7
 
 [node name="FlameWallAbility" type="Node2D" parent="Abilities" index="0"]
 script = ExtResource( 3 )

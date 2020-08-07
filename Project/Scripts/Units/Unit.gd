@@ -23,6 +23,12 @@ func init(tile, map):
 	for ability in $Abilities.get_children():
 		ability.init(self, map, $History)
 
+func get_current_health():
+	return $Health.current_health
+
+func set_current_health(new_value):
+	$Health.current_health = new_value 
+
 func can_rewind():
 	return $History.can_reverse()
 
