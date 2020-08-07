@@ -35,6 +35,17 @@ func enter():
 		_player_select_state.enter()
 		emit_signal("exited")
 		return
+	for ally in _map.get_node("YSort/Allies").get_children():
+		if ally.can_rewind(_current_rewinds):
+			return
+	for baddy in _map.get_node("YSort/Baddies").get_children():
+		if baddy.can_rewind(_current_rewinds):
+			return
+	
+	enabled = false
+	_player_select_state.refresh()
+	_player_select_state.enter()
+	emit_signal("exited")
 
 func refresh():
 	_current_rewinds = _total_rewinds
