@@ -75,9 +75,9 @@ func _input(event):
 					continue
 				tiles.push_back(target_tile)
 		
+		using = false
 		var command = throw_barbed_wire_command_scene.instance()
 		command.init(tiles, _map)
 		_history.execute_command(command)
 		yield(_history, "execution_completed")
-		using = false
 		emit_signal("used")

@@ -46,9 +46,9 @@ func _input(event):
 			return
 		
 		var tile = _map.get_tile_from_world(event.position)
+		using = false
 		var command = knockback_grenade_command_scene.instance()
 		command.init(_unit, tile, _map)
 		_history.execute_command(command)
 		yield(_history, "execution_completed")
-		using = false
 		emit_signal("used")

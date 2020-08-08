@@ -83,6 +83,8 @@ func get_moveable_tiles_in_range(starting_tile, max_distance):
 			if not _map.is_valid_map_position(check_direction):
 				continue
 			
+			if check_direction.x < 0 or check_direction.y < 0 or check_direction.x >= _map.map_size.x or check_direction.y >= _map.map_size.y:
+				continue
 			var next_tile = _map.get_tile_from_map(check_direction)
 			var next_tile_path_data = next_tile.find_node("PathData")
 			if next_tile_path_data.distance <= current_tile_path_data.distance + _DIRECTION_WEIGHTS[direction]:

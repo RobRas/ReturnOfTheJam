@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Art/SpriteFrames/teleport-alien.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Scenes/Units/Baddy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/AI/TeleportAlienAI.gd" type="Script" id=3]
 
 [node name="TeleportAlien" instance=ExtResource( 2 )]
 
@@ -9,7 +10,11 @@
 position = Vector2( 0, -9 )
 frames = ExtResource( 1 )
 animation = "idle"
-frame = 10
+frame = 7
 
 [node name="Health" parent="." index="4"]
 position = Vector2( 1, -22 )
+
+[node name="AI" type="Node2D" parent="." index="6"]
+script = ExtResource( 3 )
+_unit_sprite_path = NodePath("../Sprite")
