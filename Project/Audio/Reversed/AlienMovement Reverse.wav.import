@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/AlienMovement Reverse.wav-8703ab85f6ae87eb7f6f6bc2e3671468.sample"
+
+[deps]
+
+source_file="res://Audio/Reversed/AlienMovement Reverse.wav"
+dest_files=[ "res://.import/AlienMovement Reverse.wav-8703ab85f6ae87eb7f6f6bc2e3671468.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Scenes/Units/Humans/GrenadeSoldier.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Units/Aliens/TeleportAlien.tscn" type="PackedScene" id=2]
@@ -37,6 +37,8 @@
 [ext_resource path="res://Audio/Theme/FinalTheme.ogg" type="AudioStream" id=35]
 [ext_resource path="res://Scenes/Cursor.tscn" type="PackedScene" id=36]
 [ext_resource path="res://Scripts/ResetCounter.gd" type="Script" id=37]
+[ext_resource path="res://Audio/Reversed/HumanSoldierMovementReverse.wav" type="AudioStream" id=38]
+[ext_resource path="res://Audio/Reversed/AlienMovement Reverse.wav" type="AudioStream" id=39]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Walls.png 1"
@@ -317,6 +319,9 @@ map_path = NodePath("../../Map")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameState/AllyMovingState"]
 stream = ExtResource( 33 )
 
+[node name="ReversedAudioStreamPlayer" type="AudioStreamPlayer" parent="GameState/AllyMovingState"]
+stream = ExtResource( 38 )
+
 [node name="AllyAbilitySelectionState" type="Node2D" parent="GameState"]
 script = ExtResource( 22 )
 map_node_path = NodePath("../../Map")
@@ -330,6 +335,9 @@ pathfinder_path = NodePath("../../Map/Pathfinder")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameState/BaddyTurnState"]
 stream = ExtResource( 34 )
+
+[node name="ReversedAudioStreamPlayer" type="AudioStreamPlayer" parent="GameState/BaddyTurnState"]
+stream = ExtResource( 39 )
 
 [node name="RewindState" type="Node2D" parent="GameState"]
 script = ExtResource( 26 )

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/HumanHurt2 Reverse.wav-5611314c7416fd445fd488703ab7745f.sample"
+
+[deps]
+
+source_file="res://Audio/Reversed/HumanHurt2 Reverse.wav"
+dest_files=[ "res://.import/HumanHurt2 Reverse.wav-5611314c7416fd445fd488703ab7745f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

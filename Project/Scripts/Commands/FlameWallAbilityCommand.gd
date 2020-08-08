@@ -54,7 +54,7 @@ func can_reverse():
 
 func reverse():
 	_flame_pivot.reverse(_rotation)
-	yield(_flame_pivot, "animation_finished")
+	$ReversedAudioStreamPlayer.play()
 	for tile in _target_tiles:
 		if not tile:
 			continue
@@ -63,4 +63,5 @@ func reverse():
 		var flame = _flames[tile]
 		tile.remove_hazard(flame)
 		flame.queue_free()
+	yield($ReversedAudioStreamPlayer,"finished")
 	emit_signal("reverse_completed", self)

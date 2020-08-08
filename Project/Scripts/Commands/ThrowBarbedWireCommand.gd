@@ -35,6 +35,8 @@ func can_reverse():
 	return true
 
 func reverse():
+	$ReversedAudioStreamPlayer.play()
+	
 	for tile in _target_tiles:
 		if not tile:
 			continue
@@ -43,5 +45,6 @@ func reverse():
 		var wire = _tile_hazards[tile]
 		tile.remove_hazard(wire)
 		wire.queue_free()
+	yield($ReversedAudioStreamPlayer,"finished")
 	yield(get_tree(), "idle_frame")
 	emit_signal("reverse_completed", self)
