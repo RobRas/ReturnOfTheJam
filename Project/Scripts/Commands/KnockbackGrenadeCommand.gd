@@ -60,6 +60,7 @@ func can_execute():
 	return true
 
 func execute():
+	_user.get_node("Sprite").play("attack")
 	$AudioStreamPlayer.play()
 	_explosion_animation = _EXPLOSION_ANIMATION.instance()
 	_explosion_animation.animation = "default"
@@ -105,6 +106,7 @@ func execute():
 	if _units_to_wait_for_path == 0:
 		yield(get_tree(), "idle_frame") # Needed for History's yield
 		emit_signal("execution_completed")
+	
 
 
 func can_reverse():
