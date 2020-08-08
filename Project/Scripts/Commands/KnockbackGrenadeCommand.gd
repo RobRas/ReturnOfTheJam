@@ -120,8 +120,7 @@ func reverse():
 	_sprite.connect("animation_finished", self, "_on_animation_finished")
 	_map.add_child(_explosion_animation)
 	_explosion_animation.animation = "reverse"
-	_explosion_animation.play()
-	print_debug("Here")
+	_explosion_animation.play() 
 	$ReversedAudioStreamPlayer.play()
 	_units_to_wait_for_path = 0
 	for pull_tile in _PULL_TILES.keys():

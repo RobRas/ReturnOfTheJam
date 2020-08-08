@@ -75,7 +75,7 @@ func _input(event):
 		
 		using = false
 		var command = flame_wall_ability_command_scene.instance()
-		command.init(_unit.get_node("FlamePivot"), offset, tiles, _map)
+		command.init(_unit.get_node("FlamePivot"), offset, tiles, _map,_unit)
 		_history.execute_command(command)
 		yield(_history, "execution_completed")
 		emit_signal("used")

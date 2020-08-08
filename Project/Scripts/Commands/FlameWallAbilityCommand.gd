@@ -23,12 +23,16 @@ var _flame_pivot
 var _rotation
 var _target_tiles
 var _map
+var _unit
+var _sprite
 
-func init(flame_pivot, direction, target_tiles, map):
+func init(flame_pivot, direction, target_tiles, map,unit):
 	_flame_pivot = flame_pivot
 	_rotation = dir_to_rot[direction]
 	_target_tiles = target_tiles
 	_map = map
+	_unit=unit
+	_sprite=unit.get_node("Sprite")
 
 func can_execute():
 	return true
@@ -37,8 +41,10 @@ func execute():
 	print("EXE")
 	$AudioStreamPlayer.play()
 	_flame_pivot.play(_rotation)
+	_sprite.play("attack")
 	yield(_flame_pivot, "animation_finished")
 	print("Yielded")
+	_sprite.play("idle")
 	for tile in _target_tiles:
 		var fire_wall_node = _fire_wall_scene.instance()
 		_map.get_node("YSort/Hazards").add_child(fire_wall_node)
@@ -55,6 +61,9 @@ func can_reverse():
 func reverse():
 	_flame_pivot.reverse(_rotation)
 	$ReversedAudioStreamPlayer.play()
+	
+	_sprite.play("attack",true)
+	_sprite.play("idle")
 	for tile in _target_tiles:
 		if not tile:
 			continue
@@ -64,4 +73,5 @@ func reverse():
 		tile.remove_hazard(flame)
 		flame.queue_free()
 	yield($ReversedAudioStreamPlayer,"finished")
+	_sprite.play("idle")
 	emit_signal("reverse_completed", self)
