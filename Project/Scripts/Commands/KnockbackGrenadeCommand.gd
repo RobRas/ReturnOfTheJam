@@ -116,7 +116,8 @@ func reverse():
 	_map.add_child(_explosion_animation)
 	_explosion_animation.animation = "reverse"
 	_explosion_animation.play()
-	
+	print_debug("Here")
+	$ReversedAudioStreamPlayer.play()
 	_units_to_wait_for_path = 0
 	for pull_tile in _PULL_TILES.keys():
 		var pull_from_tile_position = _target_tile_position + pull_tile
@@ -149,8 +150,9 @@ func reverse():
 		_units_to_wait_for_path += 1
 		pulled_unit.connect("destination_reached", self, "_on_unit_destination_reached_reverse")
 		pulled_unit.move_along_path([pull_from_tile, pull_to_tile])
-	
+		
 	if _units_to_wait_for_path == 0:
+		yield($ReversedAudioStreamPlayer,"finished")
 		yield(get_tree(), "idle_frame")
 		emit_signal("reverse_completed")
 

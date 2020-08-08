@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PsychicAttackReverse.wav-ac74e79246bd75d876382d46ccf4220d.sample"
+
+[deps]
+
+source_file="res://Audio/Reversed/PsychicAttackReverse.wav"
+dest_files=[ "res://.import/PsychicAttackReverse.wav-ac74e79246bd75d876382d46ccf4220d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
