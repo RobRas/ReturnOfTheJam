@@ -11,7 +11,7 @@ export(NodePath) var pathfinder_path
 var _pathfinder
 
 var enabled = false
-var _baddies
+var _baddies = []
 
 func _ready():
 	_map = get_node(map_path)
@@ -23,17 +23,40 @@ func enter():
 	_baddies = _map.get_baddies()
 	$AudioStreamPlayer.play()
 	_map.set_show_open_tiles(false)
+	print(_baddies.size())
 	for baddy in _baddies:
 		if baddy.dead:
 			continue
-		var starting_tile = baddy.current_tile
-		var pathable_tiles = _pathfinder.get_moveable_tiles_in_range(starting_tile, 5)
-		var tile_index = randi() % pathable_tiles.size()
-		var target_tile = pathable_tiles[tile_index]
-		var path = _pathfinder.get_path_from_tile(target_tile, pathable_tiles)
-		baddy.connect("destination_reached", self, "_on_baddy_destination_reached", [baddy])
-		baddy.move_along_path(path)
+		
+		var ai = baddy.get_node("AI")
+		ai.connect("movement_finished", self, "_on_baddy_movement_finished")
+		print(baddy.name + " Connect")
+		ai.movement(_map)
 
+func _on_baddy_movement_finished(ai):
+	print(ai._unit.name + " Disconnect")
+	ai.disconnect("movement_finished", self, "_on_baddy_movement_finished")
+	_baddies.erase(ai._unit)
+	if _baddies.size() == 0:
+		$AudioStreamPlayer.stop()
+		use_abilities()
+
+func use_abilities():
+	var baddies = _map.get_baddies()
+	for baddy in baddies:
+		if baddy.dead:
+			continue
+		
+		var ai = baddy.get_node("AI")
+		ai.ability()
+		yield(ai, "ability_used")
+	
+	enabled = false
+	_rewind_state.refresh()
+	_rewind_state.enter()
+	
+
+"""
 func _on_baddy_destination_reached(tile, baddy):
 	baddy.disconnect("destination_reached", self, "_on_baddy_destination_reached")
 	_baddies.erase(baddy)
@@ -42,3 +65,4 @@ func _on_baddy_destination_reached(tile, baddy):
 		enabled = false
 		_rewind_state.refresh()
 		_rewind_state.enter()
+"""

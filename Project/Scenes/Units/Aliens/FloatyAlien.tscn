@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Art/SpriteFrames/floaty-alien.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Scenes/Units/Baddy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/AI/FloatyAlienAI.gd" type="Script" id=3]
 
 [node name="FloatyAlien" instance=ExtResource( 2 )]
 
@@ -9,7 +10,10 @@
 position = Vector2( 0, -10 )
 frames = ExtResource( 1 )
 animation = "idle"
-frame = 5
+frame = 10
 
 [node name="Health" parent="." index="4"]
 position = Vector2( 1, -24 )
+
+[node name="AI" type="Node2D" parent="." index="6"]
+script = ExtResource( 3 )

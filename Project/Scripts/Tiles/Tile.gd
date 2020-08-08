@@ -14,6 +14,8 @@ var permanent_blocked = false
 var unit = null
 var hazards = []
 
+var enemy_target = false
+
 func init(cell_position, world_position, blocked):
 	map_position = cell_position
 	position = world_position

@@ -68,9 +68,9 @@ func _input(event):
 		if tiles.size() == 0:
 			return
 		
+		using = false
 		var command = flame_wall_ability_command_scene.instance()
 		command.init(_unit.get_node("FlamePivot"), offset, tiles, _map)
 		_history.execute_command(command)
 		yield(_history, "execution_completed")
-		using = false
 		emit_signal("used")

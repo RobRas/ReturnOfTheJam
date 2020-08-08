@@ -4,13 +4,13 @@ var tile_scene = preload("res://Scenes/Tile.tscn")
 export(Array, int) var blocker_tile_ids
 
 var _map = []
-var _map_size
+var map_size
 
 func _ready():
-	_map_size = get_used_rect().size
+	map_size = get_used_rect().size
 	var half_cell = cell_size / 2.0
-	for y in range(_map_size.y):
-		for x in range(_map_size.x):
+	for y in range(map_size.y):
+		for x in range(map_size.x):
 			var cell_position = Vector2(x, y)
 			var cell_index = get_cellv(cell_position)
 			
@@ -26,14 +26,25 @@ func init():
 	$YSort/Baddies.init(self)
 	$Pathfinder.init(self)
 
+func distance(tile_a, tile_b):
+	var a_pos = get_map_position_from_tile(tile_a)
+	var b_pos = get_map_position_from_tile(tile_b)
+	var difference = b_pos - a_pos
+	if abs(difference.x) >= abs(difference.y):
+		return difference.x
+	else:
+		return difference.y
+	
+	
+
 func is_valid_map_position(map_position):
 	var index = _get_map_index(map_position)
 	return index in range(_map.size())
 
 func is_valid_world_position(world_position):
-	if world_position.x < 0 or world_position.x > _map_size.x * cell_size.x:
+	if world_position.x < 0 or world_position.x > map_size.x * cell_size.x:
 		return false
-	if world_position.y < 0 or world_position.y > _map_size.y * cell_size.y:
+	if world_position.y < 0 or world_position.y > map_size.y * cell_size.y:
 		return false
 	
 	var map_position = world_to_map(world_position)
@@ -63,5 +74,8 @@ func set_show_open_tiles(show):
 	for tile in _map:
 		tile.set_show_open_areas(show)
 
+func get_pathfinder():
+	return $Pathfinder
+
 func _get_map_index(map_position):
-	return map_position.y * _map_size.x + map_position.x
+	return map_position.y * map_size.x + map_position.x

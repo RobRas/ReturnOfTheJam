@@ -36,5 +36,5 @@ func _on_ability_used():
 	for ability in _ally.get_node("Abilities").get_children():
 		ability.stop_using()
 		ability.disconnect("used", self, "_on_ability_used")
-		enabled = false
-		_player_select_state.enter()
+	enabled = false
+	_player_select_state.enter()

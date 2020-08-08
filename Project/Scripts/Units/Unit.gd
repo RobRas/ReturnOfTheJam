@@ -30,6 +30,9 @@ func init(tile, map):
 	$Movement.init($History)
 	for ability in $Abilities.get_children():
 		ability.init(self, map, $History)
+	
+	if has_node("AI"):
+		$AI.init(self)
 
 func damage(amount):
 	var command = _modify_health_command.instance()
