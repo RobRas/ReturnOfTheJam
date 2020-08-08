@@ -319,7 +319,7 @@ map_path = NodePath("../../Map")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameState/AllyMovingState"]
 stream = ExtResource( 33 )
 
-[node name="ReversedAudioStreamPlayer" type="AudioStreamPlayer" parent="GameState/AllyMovingState"]
+[node name="ReversedAudioStreamPlayer" type="AudioStreamPlayer" parent="GameState/AllyMovingState/AudioStreamPlayer"]
 stream = ExtResource( 38 )
 
 [node name="AllyAbilitySelectionState" type="Node2D" parent="GameState"]

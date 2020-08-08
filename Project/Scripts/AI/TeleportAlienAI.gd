@@ -60,7 +60,11 @@ func teleport(map):
 	var pathfinder = map.get_pathfinder()
 	var tiles_in_ally_range = pathfinder.get_moveable_tiles_in_range(_target.current_tile, _teleport_distance_from_ally)
 	for i in range(tiles_in_ally_range.size()-1, -1, -1):
-		if (map.distance(_target, tiles_in_ally_range[i]) < _teleport_distance_from_ally):
+		var target_pos = map.get_map_position_from_tile(tiles_in_ally_range[i])
+		var target_unit_pos = map.get_map_position_from_tile(_target.current_tile)
+		var distance = (target_pos - target_unit_pos).abs()
+		print(distance)
+		if distance.x < _teleport_distance_from_ally and distance.y < _teleport_distance_from_ally:
 			tiles_in_ally_range.remove(i)
 			continue
 		if (tiles_in_ally_range[i].enemy_target):
