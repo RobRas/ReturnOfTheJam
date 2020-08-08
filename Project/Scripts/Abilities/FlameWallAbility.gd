@@ -61,6 +61,8 @@ func _input(event):
 		var tiles = []
 		for i in range(_TILE_COUNT):
 			var tile_position = _unit_position + (i + 1) * offset
+			if tile_position.x < 0 or tile_position.y < 0 or tile_position.x >= _map.map_size.x or tile_position.y >= _map.map_size.y:
+				continue
 			if not _map.is_valid_map_position(tile_position):
 				continue
 			var target_tile = _map.get_tile_from_map(tile_position)

@@ -54,6 +54,8 @@ func _input(event):
 			tile_positions.push_back(Vector2(unit_tile_position.x, unit_tile_position.y + 1))
 			tile_positions.push_back(Vector2(unit_tile_position.x, unit_tile_position.y - 1))
 			for tile_position in tile_positions:
+				if tile_position.x < 0 or tile_position.y < 0 or tile_position.x >= _map.map_size.x or tile_position.y >= _map.map_size.y:
+					continue
 				if not _map.is_valid_map_position(tile_position):
 					continue
 				var target_tile = _map.get_tile_from_map(tile_position)
@@ -68,6 +70,8 @@ func _input(event):
 			tile_positions.push_back(Vector2(unit_tile_position.x + 1, unit_tile_position.y))
 			tile_positions.push_back(Vector2(unit_tile_position.x - 1, unit_tile_position.y))
 			for tile_position in tile_positions:
+				if tile_position.x < 0 or tile_position.y < 0 or tile_position.x >= _map.map_size.x or tile_position.y >= _map.map_size.y:
+					continue
 				if not _map.is_valid_map_position(tile_position):
 					continue
 				var target_tile = _map.get_tile_from_map(tile_position)
