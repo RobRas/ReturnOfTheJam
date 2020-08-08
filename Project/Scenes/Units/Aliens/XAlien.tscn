@@ -10,7 +10,7 @@
 position = Vector2( 0, -5 )
 frames = ExtResource( 1 )
 animation = "idle"
-frame = 7
+frame = 3
 
 [node name="Health" parent="." index="4"]
 position = Vector2( 1, -16 )
