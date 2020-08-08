@@ -46,10 +46,13 @@ func _input(event):
 			return
 		
 		var _unit_position = _map.get_map_position_from_tile(_unit.current_tile)
-		var _tile_position = _map.get_map_position_from_tile(_current_tile)
+		var _tile_position = _map.world_to_map(event.position)
 		
 		var offset = _tile_position - _unit_position
 		if offset.x != 0 and offset.y != 0 and abs(offset.x) != abs(offset.y):
+			return
+		
+		if offset.x == 0 and offset.y == 0:
 			return
 		
 		offset.x = clamp(offset.x, -1, 1)

@@ -11,7 +11,7 @@ export(NodePath) var pathfinder_path
 var _pathfinder
 
 var enabled = false
-var _baddies = []
+var _baddy_count = 0
 
 func _ready():
 	_map = get_node(map_path)
@@ -20,24 +20,22 @@ func _ready():
 
 func enter():
 	enabled = true
-	_baddies = _map.get_baddies()
+	_baddy_count = _map.get_baddies().size()
 	$AudioStreamPlayer.play()
 	_map.set_show_open_tiles(false)
-	print(_baddies.size())
-	for baddy in _baddies:
+	for baddy in _map.get_baddies():
 		if baddy.dead:
+			_baddy_count -= 1
 			continue
 		
 		var ai = baddy.get_node("AI")
 		ai.connect("movement_finished", self, "_on_baddy_movement_finished")
-		print(baddy.name + " Connect")
 		ai.movement(_map)
 
 func _on_baddy_movement_finished(ai):
-	print(ai._unit.name + " Disconnect")
 	ai.disconnect("movement_finished", self, "_on_baddy_movement_finished")
-	_baddies.erase(ai._unit)
-	if _baddies.size() == 0:
+	_baddy_count -= 1
+	if _baddy_count == 0:
 		$AudioStreamPlayer.stop()
 		use_abilities()
 
@@ -48,7 +46,7 @@ func use_abilities():
 			continue
 		
 		var ai = baddy.get_node("AI")
-		ai.ability()
+		ai.ability(_map)
 		yield(ai, "ability_used")
 	
 	enabled = false

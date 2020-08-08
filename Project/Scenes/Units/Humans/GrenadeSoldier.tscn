@@ -10,7 +10,7 @@
 position = Vector2( 0, -9 )
 frames = ExtResource( 1 )
 animation = "idle"
-frame = 5
+frame = 10
 
 [node name="KnockbackGrenadeAbility" type="Node2D" parent="Abilities" index="0"]
 script = ExtResource( 3 )

@@ -15,7 +15,7 @@ func _ready():
 
 func _process(delta):
 	if _enabled:
-		if _map.is_valid_world_position(global_position):
+		if _map.is_valid_world_position(get_global_mouse_position()):
 			var tile = _map.get_tile_from_world(get_global_mouse_position())
 			global_position = tile.global_position
 		else:

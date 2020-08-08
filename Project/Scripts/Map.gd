@@ -30,10 +30,7 @@ func distance(tile_a, tile_b):
 	var a_pos = get_map_position_from_tile(tile_a)
 	var b_pos = get_map_position_from_tile(tile_b)
 	var difference = b_pos - a_pos
-	if abs(difference.x) >= abs(difference.y):
-		return difference.x
-	else:
-		return difference.y
+	return abs(difference.x) + abs(difference.y)
 	
 	
 

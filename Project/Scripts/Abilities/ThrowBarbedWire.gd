@@ -41,9 +41,9 @@ func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed and _current_tile:
 		if _current_tile == _unit.current_tile:
 			return
-		
+
 		var tiles = []
-		var mouse_tile_position = _map.get_map_position_from_tile(_current_tile)
+		var mouse_tile_position = _map.world_to_map(event.position)
 		var unit_tile_position = _map.get_map_position_from_tile(_unit.current_tile)
 		var tile_displacement = mouse_tile_position - unit_tile_position
 		if (abs(tile_displacement.x) >= abs(tile_displacement.y)):

@@ -12,7 +12,6 @@
 position = Vector2( 0, -9 )
 frames = ExtResource( 1 )
 animation = "idle"
-frame = 7
 
 [node name="FlameWallAbility" parent="Abilities" index="0" instance=ExtResource( 4 )]
 

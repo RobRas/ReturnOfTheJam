@@ -34,9 +34,11 @@ func can_execute():
 	return true
 
 func execute():
+	print("EXE")
 	$AudioStreamPlayer.play()
 	_flame_pivot.play(_rotation)
 	yield(_flame_pivot, "animation_finished")
+	print("Yielded")
 	for tile in _target_tiles:
 		var fire_wall_node = _fire_wall_scene.instance()
 		_map.get_node("YSort/Hazards").add_child(fire_wall_node)
@@ -44,7 +46,6 @@ func execute():
 		fire_wall_node.init(tile)
 		tile.add_hazard(fire_wall_node)
 		_flames[tile] = fire_wall_node
-	yield(get_tree(), "idle_frame")
 	emit_signal("execution_completed", self)
 
 
@@ -53,6 +54,7 @@ func can_reverse():
 
 func reverse():
 	_flame_pivot.reverse(_rotation)
+	yield(_flame_pivot, "animation_finished")
 	for tile in _target_tiles:
 		if not tile:
 			continue
@@ -61,5 +63,4 @@ func reverse():
 		var flame = _flames[tile]
 		tile.remove_hazard(flame)
 		flame.queue_free()
-	yield(get_tree(), "idle_frame")
 	emit_signal("reverse_completed", self)

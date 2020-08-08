@@ -46,6 +46,7 @@ signal reverse_completed(command)
 var _target_tile_position
 var _map
 var _user
+var _sprite
 
 var _units_to_wait_for_path = 0
 
@@ -53,6 +54,7 @@ var _explosion_animation
 
 func init(user, target_tile, map):
 	_user = user
+	_sprite = user.get_node("Sprite")
 	_map = map
 	_target_tile_position = _map.get_map_position_from_tile(target_tile)
 
@@ -60,7 +62,9 @@ func can_execute():
 	return true
 
 func execute():
-	_user.get_node("Sprite").play("attack")
+	_sprite.connect("animation_finished", self, "_on_animation_finished")
+	_sprite.animation = "attack"
+	_sprite.play()
 	$AudioStreamPlayer.play()
 	_explosion_animation = _EXPLOSION_ANIMATION.instance()
 	_explosion_animation.animation = "default"
@@ -113,6 +117,7 @@ func can_reverse():
 	return true
 
 func reverse():
+	_sprite.connect("animation_finished", self, "_on_animation_finished")
 	_map.add_child(_explosion_animation)
 	_explosion_animation.animation = "reverse"
 	_explosion_animation.play()
@@ -170,3 +175,8 @@ func _on_unit_destination_reached_reverse(tile):
 func _on_explosion_animation_finished():
 	_explosion_animation.stop()
 	_map.remove_child(_explosion_animation)
+
+func _on_animation_finished():
+	_sprite.disconnect("animation_finished", self, "_on_animation_finished")
+	_sprite.animation = "idle"
+	_sprite.play()

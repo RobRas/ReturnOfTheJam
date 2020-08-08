@@ -13,7 +13,7 @@ func movement(map):
 	yield(get_tree(), "idle_frame")
 	emit_signal("movement_finished", self)
 	
-func ability():
+func ability(map):
 	print("Floaty Ability")
 	yield(get_tree(), "idle_frame")
 	emit_signal("ability_used", self)

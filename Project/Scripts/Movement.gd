@@ -37,7 +37,7 @@ func _execute_next_path_tile(path, cost = 1):
 		return
 	
 	var command = _movement_command.instance()
-	command.init(self, path.pop_front(), path[0])
+	command.init(get_parent(), self, path.pop_front(), path[0])
 	command.cost = cost
 	command.connect("new_tile_reached", self, "_on_command_new_tile_reached")
 	command.connect("reverse_completed", self, "_on_command_reverse_completed")
